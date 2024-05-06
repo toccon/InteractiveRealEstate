@@ -1,0 +1,173 @@
+import React, { useEffect } from 'react';
+import * as am5 from '@amcharts/amcharts5';
+import * as am5map from '@amcharts/amcharts5/map';
+import am5themes_Animated from "@amcharts/amcharts5/themes/Animated";
+import am5geodata_worldLow from "@amcharts/amcharts5-geodata/worldLow";
+import am5geodata_countries2 from "@amcharts/amcharts5-geodata/data/countries2";
+import { drillDownSVG } from "./Constants";
+import { map } from '@amcharts/amcharts5/.internal/core/util/Array';
+
+const DrillDownMap = () => {
+  useEffect(() => {
+                                // EU
+    let supportedCountries = ['AT', 'BE', 'BG', 'HR', 'CY', 'CZ', 'DK', 'EE', 'FI', 'FR', 'DE', 'GR', 'HU', 'IS', 'IE', 'IT', 'LV', 'LT', 'LU', 'MT', 'ME', 'NL', 'MK', 'NO', 'PL', 'PT', 'RO', 'SK', 'SI', 'ES', 'SE', 'CH', 'TR',
+'GE', 'HK', 'IN', 'ID', 'JP', 'MY', 'PH', 'SG', 'TW', 'TH', 'VN', //ASIA
+'AR', 'BR', 'CL', 'CO', 'MX', 'PE', 'UY', //LATIN AMERICA
+'EG', 'IL', 'MA', 'QA', 'TN', 'AE', //MIDDLE EAST
+'PR', //CARIBBEAN
+'ZA']; //AFRICA
+
+    let root = am5.Root.new('chartdiv');
+    let colors = am5.ColorSet.new(root, {});
+
+    root.setThemes([am5themes_Animated.new(root)]);
+
+    let chart = root.container.children.push(
+      am5map.MapChart.new(root, {
+        panX: 'rotateX',
+        projection: am5map.geoMercator(),
+      })
+    );
+
+    // World series is the default drilled out view of the whole world
+    let worldSeries = chart.series.push(
+      am5map.MapPolygonSeries.new(root, {
+        geoJSON: am5geodata_worldLow,
+        exclude: ['AQ'],
+      })
+    );
+
+    // Countries with no data ex. Western Sahara
+    worldSeries.mapPolygons.template.setAll({
+      tooltipText: '{name}',
+      interactive: true,
+      fill: am5.color(0xaaaaaa),
+      templateField: 'polygonSettings',
+      fillOpacity: 0.8,
+    });
+
+    worldSeries.mapPolygons.template.states.create("hover", { fillOpacity: 1 });
+
+    // onClick drill down handler for all countries
+    worldSeries.mapPolygons.template.events.on('click', (ev) => {
+      let dataItem = ev.target.dataItem;
+      let data = dataItem.dataContext;
+
+        if(supportedCountries.includes(data.id)){
+            let zoomAnimation = worldSeries.zoomToDataItem(dataItem);
+            Promise.all([
+                zoomAnimation.waitForStop(),
+                am5.net.load(
+                'https://cdn.amcharts.com/lib/5/geodata/json/' + data.map + '.json',
+                chart
+                ),
+            ]).then((results) => {
+                let geodata = am5.JSONParser.parse(results[1].response);
+                countrySeries.setAll({
+                geoJSON: geodata,
+                fill: data.polygonSettings.fill,
+                });
+                countrySeries.show();
+                worldSeries.hide(100);
+                backContainer.show();
+            });
+        }
+    });
+
+    // Country series is the drilled down into country 
+    let countrySeries = chart.series.push(
+      am5map.MapPolygonSeries.new(root, {
+        visible: false,
+      })
+    );
+
+    countrySeries.mapPolygons.template.setAll({
+      tooltipText: '{name}',
+      interactive: true,
+      fill: am5.color(0x006400), // not sure what this colour is for
+    });
+
+    // Colour of drilled down provinces on hover
+    countrySeries.mapPolygons.template.states.create('hover', {
+      fill: am5.color(0x006400),
+    });
+
+    let data = [];
+    for (var id in am5geodata_countries2) {
+      if (am5geodata_countries2.hasOwnProperty(id)) {
+        let country = am5geodata_countries2[id];
+        if (country.maps.length) {
+          data.push({
+            id: id,
+            map: country.maps[0],
+            polygonSettings: {
+                // Default colour for countries. Green if in supportedCountries, else gray. 
+                fill: (supportedCountries.includes(id)) ? am5.color(0x0ba30b) : am5.color(0xaaaaaa),
+                states: {
+                    hover: {
+                      properties: {
+                        fill: am5.color(0x006400) // Specify the hover color here
+                      }
+                    }
+                  },
+            },
+          });
+        }
+      }
+    }
+    worldSeries.data.setAll(data);
+
+    // Back button and label when drilled in 
+    let backContainer = chart.children.push(
+      am5.Container.new(root, {
+        x: am5.p100,
+        centerX: am5.p100,
+        dx: -10,
+        paddingTop: 5,
+        paddingRight: 10,
+        paddingBottom: 5,
+        y: 30,
+        interactiveChildren: false,
+        layout: root.horizontalLayout,
+        cursorOverStyle: 'pointer',
+        background: am5.RoundedRectangle.new(root, {
+          fill: am5.color(0xffffff),
+          fillOpacity: 0.2,
+        }),
+        visible: false,
+      })
+    );
+
+    let backLabel = backContainer.children.push(
+      am5.Label.new(root, {
+        text: 'Back to world map',
+        centerY: am5.p50,
+      })
+    );
+
+    let backButton = backContainer.children.push(
+      am5.Graphics.new(root, {
+        width: 32,
+        height: 32,
+        centerY: am5.p50,
+        fill: am5.color(0x555555),
+        svgPath: drillDownSVG,
+      })
+    );
+
+    backContainer.events.on('click', function () {
+      chart.goHome();
+      worldSeries.show();
+      countrySeries.hide();
+      backContainer.hide();
+    });
+
+    return () => {
+      root.dispose();
+    };
+  }, []);
+
+  return <div id="chartdiv" style={{ width: '100vw', height: '100vh', margin: 0, padding: 0 }}></div>;
+};
+
+export default DrillDownMap;
