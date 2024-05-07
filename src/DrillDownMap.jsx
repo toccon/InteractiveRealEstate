@@ -37,6 +37,9 @@ const DrillDownMap = () => {
       })
     );
 
+    // add zoom control 
+    chart.set("zoomControl", am5map.ZoomControl.new(root, {}));
+
     // Countries with no data ex. Western Sahara
     worldSeries.mapPolygons.template.setAll({
       tooltipText: '{name}',
