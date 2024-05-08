@@ -1,11 +1,16 @@
 import './App.css';
-import MapChart from './Map';
 import DrillDownMap from './DrillDownMap';
+import { SidePanel } from './SidePanel';
+import { useState } from 'react';
 
 function App() {
+
+  const [selectedCountry, setSelectedCountry] = useState(null); 
+
   return (
     <div className="App">
-      <DrillDownMap />
+      <DrillDownMap setSelectedCountry={setSelectedCountry}/>
+      {selectedCountry && <SidePanel selectedCountry={selectedCountry}/>}
     </div>
   );
 }

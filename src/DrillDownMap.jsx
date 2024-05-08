@@ -4,21 +4,11 @@ import * as am5map from '@amcharts/amcharts5/map';
 import am5themes_Animated from "@amcharts/amcharts5/themes/Animated";
 import am5geodata_worldLow from "@amcharts/amcharts5-geodata/worldLow";
 import am5geodata_countries2 from "@amcharts/amcharts5-geodata/data/countries2";
-import { drillDownSVG } from "./Constants";
-import { map } from '@amcharts/amcharts5/.internal/core/util/Array';
+import { supportedCountries, drillDownSVG } from "./Constants";
 
-const DrillDownMap = () => {
+const DrillDownMap = ({setSelectedCountry}) => {
   useEffect(() => {
-                                // EU
-    let supportedCountries = ['AT', 'BE', 'BG', 'HR', 'CY', 'CZ', 'DK', 'EE', 'FI', 'FR', 'DE', 'GR', 'HU', 'IS', 'IE', 'IT', 'LV', 'LT', 'LU', 'MT', 'ME', 'NL', 'MK', 'NO', 'PL', 'PT', 'RO', 'SK', 'SI', 'ES', 'SE', 'CH', 'TR',
-'GE', 'HK', 'IN', 'ID', 'JP', 'MY', 'PH', 'SG', 'TW', 'TH', 'VN', //ASIA
-'AR', 'BR', 'CL', 'CO', 'MX', 'PE', 'UY', //LATIN AMERICA
-'EG', 'IL', 'MA', 'QA', 'TN', 'AE', //MIDDLE EAST
-'PR', //CARIBBEAN
-'ZA']; //AFRICA
-
     let root = am5.Root.new('chartdiv');
-    let colors = am5.ColorSet.new(root, {});
 
     root.setThemes([am5themes_Animated.new(root)]);
 
@@ -73,6 +63,7 @@ const DrillDownMap = () => {
                 countrySeries.show();
                 worldSeries.hide(100);
                 backContainer.show();
+                setSelectedCountry(data);
             });
         }
     });
@@ -123,11 +114,11 @@ const DrillDownMap = () => {
     // Back button and label when drilled in 
     let backContainer = chart.children.push(
       am5.Container.new(root, {
-        x: am5.p100,
-        centerX: am5.p100,
+        x: am5.p0,
+        centerX: am5.p0,
         dx: -10,
         paddingTop: 5,
-        paddingRight: 10,
+        paddingLeft: 10,
         paddingBottom: 5,
         y: 30,
         interactiveChildren: false,
@@ -140,15 +131,15 @@ const DrillDownMap = () => {
         visible: false,
       })
     );
-
-    let backLabel = backContainer.children.push(
+    
+    backContainer.children.push(
       am5.Label.new(root, {
         text: 'Back to world map',
         centerY: am5.p50,
       })
     );
-
-    let backButton = backContainer.children.push(
+    
+    backContainer.children.push(
       am5.Graphics.new(root, {
         width: 32,
         height: 32,
@@ -163,6 +154,7 @@ const DrillDownMap = () => {
       worldSeries.show();
       countrySeries.hide();
       backContainer.hide();
+      setSelectedCountry(null);
     });
 
     return () => {
