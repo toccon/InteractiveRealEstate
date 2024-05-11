@@ -1,16 +1,16 @@
+import { useSelector } from 'react-redux';
 import './App.css';
 import DrillDownMap from './DrillDownMap';
 import { SidePanel } from './SidePanel';
-import { useState } from 'react';
 
 function App() {
 
-  const [selectedCountry, setSelectedCountry] = useState(null); 
+  const selectedCountry = useSelector(state => state.selectedCountry.value);
 
   return (
     <div className="App">
-      <DrillDownMap setSelectedCountry={setSelectedCountry}/>
-      {selectedCountry && <SidePanel selectedCountry={selectedCountry}/>}
+      <DrillDownMap/>
+      {selectedCountry && <SidePanel/>}
     </div>
   );
 }

@@ -5,8 +5,13 @@ import am5themes_Animated from "@amcharts/amcharts5/themes/Animated";
 import am5geodata_worldLow from "@amcharts/amcharts5-geodata/worldLow";
 import am5geodata_countries2 from "@amcharts/amcharts5-geodata/data/countries2";
 import { supportedCountries, drillDownSVG } from "./Constants";
+import { useDispatch } from 'react-redux';
+import { clear, select } from './redux/slices/selectedCountrySlice';
 
 const DrillDownMap = ({setSelectedCountry}) => {
+  
+  const dispatch = useDispatch()
+  
   useEffect(() => {
     let root = am5.Root.new('chartdiv');
 
@@ -63,7 +68,7 @@ const DrillDownMap = ({setSelectedCountry}) => {
                 countrySeries.show();
                 worldSeries.hide(100);
                 backContainer.show();
-                setSelectedCountry(data);
+                dispatch(select({ data }));
             });
         }
     });
@@ -154,7 +159,7 @@ const DrillDownMap = ({setSelectedCountry}) => {
       worldSeries.show();
       countrySeries.hide();
       backContainer.hide();
-      setSelectedCountry(null);
+      dispatch(clear());
     });
 
     return () => {

@@ -1,11 +1,15 @@
 import { useState, Fragment } from "react";
 import { Button, Drawer, Space } from "antd";
+import { useSelector } from "react-redux";
 
-export const SidePanel = (selectedCountry) => {
+export const SidePanel = () => {
 
+    // local state
     const [open, setOpen] = useState(true);
     const [width, setWidth] = useState(736); // Initial width of the drawer
-    const [currentSelectedCountry, setCurrentSelectedCountry] = useState(selectedCountry);
+    
+    // global state
+    const currentSelectedCountry = useSelector(state => state.selectedCountry.value);
 
     const onClose = () => {
         setOpen(false);
