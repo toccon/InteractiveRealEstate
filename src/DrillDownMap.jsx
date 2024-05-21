@@ -4,13 +4,15 @@ import * as am5map from '@amcharts/amcharts5/map';
 import am5themes_Animated from "@amcharts/amcharts5/themes/Animated";
 import am5geodata_worldLow from "@amcharts/amcharts5-geodata/worldLow";
 import am5geodata_countries2 from "@amcharts/amcharts5-geodata/data/countries2";
-import { supportedCountries, drillDownSVG } from "./Constants";
-import { useDispatch } from 'react-redux';
+import { supportedCountries, backButtonSVG } from "./Constants";
+import { useDispatch, useSelector } from 'react-redux';
 import { clear, select } from './redux/slices/selectedCountrySlice';
+import { open, setExpandSidePanelButton } from './redux/slices/sidePanelSlice';
 
-const DrillDownMap = ({setSelectedCountry}) => {
+const DrillDownMap = () => {
   
   const dispatch = useDispatch()
+  const isSidePanelOpen = useSelector(state => state.sidePanel.open);
   
   useEffect(() => {
     let root = am5.Root.new('chartdiv');
@@ -150,7 +152,7 @@ const DrillDownMap = ({setSelectedCountry}) => {
         height: 32,
         centerY: am5.p50,
         fill: am5.color(0x555555),
-        svgPath: drillDownSVG,
+        svgPath: backButtonSVG,
       })
     );
 
@@ -161,6 +163,51 @@ const DrillDownMap = ({setSelectedCountry}) => {
       backContainer.hide();
       dispatch(clear());
     });
+
+    // Expand side panel button visible when side panel is closed  
+    let expandSidePanelContainer = chart.children.push(
+      am5.Container.new(root, {
+        x: am5.p100,
+        centerX: am5.p100,
+        dx: -10,
+        paddingTop: 5,
+        paddingRight: 10,
+        paddingBottom: 5,
+        y: 30,
+        interactiveChildren: false,
+        layout: root.horizontalLayout,
+        cursorOverStyle: 'pointer',
+        background: am5.RoundedRectangle.new(root, {
+          fill: am5.color(0xffffff),
+          fillOpacity: 0.2,
+        }),
+        visible: !isSidePanelOpen,
+      })
+    );
+    
+    expandSidePanelContainer.children.push(
+      am5.Label.new(root, {
+        text: 'Open side panel',
+        centerY: am5.p50,
+      })
+    );
+    
+    expandSidePanelContainer.children.push(
+      am5.Graphics.new(root, {
+        width: 32,
+        height: 32,
+        centerY: am5.p50,
+        fill: am5.color(0x555555),
+        svgPath: backButtonSVG,
+      })
+    );
+
+    expandSidePanelContainer.events.on('click', function () {
+      dispatch(open());
+      expandSidePanelContainer.hide();
+    });
+
+    dispatch(setExpandSidePanelButton({expandSidePanelContainer}));
 
     return () => {
       root.dispose();

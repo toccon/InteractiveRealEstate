@@ -5,12 +5,12 @@ import { SidePanel } from './SidePanel';
 
 function App() {
 
-  const selectedCountry = useSelector(state => state.selectedCountry.value);
+  const isSidePanelOpen = useSelector(state => state.sidePanel.open);
 
   return (
     <div className="App">
       <DrillDownMap/>
-      {selectedCountry && <SidePanel/>}
+      {isSidePanelOpen && <SidePanel/>}
     </div>
   );
 }
