@@ -1,7 +1,9 @@
 import React, { useState, Fragment } from "react";
-import { Drawer, Card } from "antd";
+import { Drawer, Card, Flex } from "antd";
 import { useSelector, useDispatch } from "react-redux";
 import { close } from './redux/slices/sidePanelSlice';
+
+const { Meta } = Card;
 
 const gridStyle = {
   width: '25%',
@@ -21,6 +23,7 @@ export const SidePanel = () => {
     const isSidePanelOpen = useSelector(state => state.sidePanel.open);
     const expandSidePanelButton = useSelector(state => state.sidePanel.expandSidePanelButton)
 
+    // for handling dragging the side panel to expand/collapse
     const cbHandleMouseMove = React.useCallback(handleMousemove, []);
     const cbHandleMouseUp = React.useCallback(handleMouseup, []);
 
@@ -30,6 +33,7 @@ export const SidePanel = () => {
         console.log(currentSelectedCountry);
     };
 
+    // for handling dragging the side panel to expand/collapse
     function handleMouseup(e) {
         if (!isResizing) {
           return;
@@ -39,6 +43,7 @@ export const SidePanel = () => {
         document.removeEventListener("mouseup", cbHandleMouseUp);
       }
     
+      // for handling dragging the side panel to expand/collapse
       function handleMousedown(e) {
         e.stopPropagation();
         e.preventDefault();
@@ -48,6 +53,7 @@ export const SidePanel = () => {
         isResizing = true;
       }
     
+      // for handling dragging the side panel to expand/collapse
       function handleMousemove(e) {
         let offsetRight =
           document.body.offsetWidth - (e.clientX - document.body.offsetLeft);
@@ -75,15 +81,35 @@ export const SidePanel = () => {
                 {/* content */}
                 { (currentSelectedCountry) ?
                 <div>
-                <p>Some contents...Some contents...Some contents...Some contents...Some contents...Some contents...Some contents...Some contents...Some contents...Some contents...Some contents...Some contents...Some contents...Some contents...Some contents...Some contents...Some contents...Some contents...Some contents...Some contents...Some contents...Some contents...Some contents...Some contents...Some contents...Some contents...Some contents...Some contents...Some contents...Some contents...Some contents...Some contents...Some contents...Some contents...Some contents...</p>
-                <p>Some contents...</p>
-                <p>Some contents...</p>
+                  <p>Some contents...Some contents...Some contents...Some contents...Some contents...Some contents...Some contents...Some contents...Some contents...Some contents...Some contents...Some contents...Some contents...Some contents...Some contents...Some contents...Some contents...Some contents...Some contents...Some contents...Some contents...Some contents...Some contents...Some contents...Some contents...Some contents...Some contents...Some contents...Some contents...Some contents...Some contents...Some contents...Some contents...Some contents...Some contents...</p>
+                  <p>Some contents...</p>
+                  <p>Some contents...</p>
                 </div>
                 : 
                 <div>
-                <p>No country selected</p>
-                <p>Some contents...</p>
-                <p>Some contents...</p>
+                  <Flex wrap={true}>
+                    <Card
+                      hoverable
+                      style={{ width: 100, height: 50 }}
+                      cover={<img alt="example" src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png" />}
+                    >
+                      <Meta title="Europe Street beat"/>
+                    </Card>
+                    <Card
+                      hoverable
+                      style={{ width: 100, height: 50 }}
+                      cover={<img alt="example" src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png" />}
+                    >
+                      <Meta title="Europe Street beat"/>
+                    </Card>
+                    <Card
+                      hoverable
+                      style={{ width: 100, height: 50 }}
+                      cover={<img alt="example" src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png" />}
+                    >
+                      <Meta title="Europe Street beat"/>
+                    </Card>
+                  </Flex>
                 </div>
                 }
             </Drawer>
