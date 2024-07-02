@@ -7,7 +7,7 @@ import am5geodata_countries2 from "@amcharts/amcharts5-geodata/data/countries2";
 import { supportedCountries, backButtonSVG } from "./Constants";
 import { useDispatch, useSelector } from 'react-redux';
 import { clear, select } from './redux/slices/selectedCountrySlice';
-import { open, setExpandSidePanelButton } from './redux/slices/sidePanelSlice';
+import { open } from './redux/slices/sidePanelSlice';
 
 const DrillDownMap = () => {
   

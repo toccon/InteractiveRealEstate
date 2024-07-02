@@ -4,13 +4,9 @@ import { Drawer, Card, Flex } from "antd";
 import { useSelector, useDispatch } from "react-redux";
 import { close } from './redux/slices/sidePanelSlice';
 import { northAmericaCountries, southAmericaCountries, asiaCountries, middleEastCountries, europeCountries, africaCountries, supportedCountries } from "./Constants";
+import './App.css';
 
 const { Meta } = Card;
-
-const gridStyle = {
-  width: '25%',
-  textAlign: 'center',
-};
 
 let isResizing = null;
 
@@ -20,7 +16,7 @@ export const SidePanel = () => {
     
     // global state
     const dispatch = useDispatch();
-    const currentSelectedCountry = useSelector(state => state.selectedCountry.value);
+    const currentSelectedCountry = useSelector(state => state.selectedCountry.id);
     const isSidePanelOpen = useSelector(state => state.sidePanel.open);
 
     // for handling dragging the side panel to expand/collapse
@@ -72,16 +68,33 @@ export const SidePanel = () => {
       for (let id of supportedCountries) {
         if (am5geodata_countries2.hasOwnProperty(id)) {
           let country = am5geodata_countries2[id];
+          
+          let fontsize = 12; 
+          if(id === "GB" || id === "CZ"){
+            fontsize = 10;
+          }
+
+          let countryName = country.country;
+          if(id === "AE"){
+            countryName = "UAE"
+          }
+          else if(id === "VN"){
+            countryName = "Vietnam"
+          }
+
+          // Construct the image filename using the ID
+          let imageSrc = require(`./images/flags/${id}-flag.png`);
+
           let jsx = 
             <Card
+              className="country-card"
               hoverable
-              style={{ width: 120, height: 50 }}
-              cover={<img alt={country.country} src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png" style={{ width: '120px', height: '50px' }}/>}
+              cover={<img className="country-card" alt={country.country} src={imageSrc}/>}
               key={id}
             >
-            <Meta 
-              title={<div style={{ fontSize: 12, textAlign: 'center' }}>{country.country}</div>}
-            />
+              <Meta 
+                title={<div style={{ fontSize: fontsize, textAlign: 'center' }}>{countryName}</div>}
+              />
             </Card>
             if(northAmericaCountries.includes(id)) naCountriesJsx.push(jsx);
             else if(southAmericaCountries.includes(id)) saCountriesJsx.push(jsx);
@@ -117,37 +130,37 @@ export const SidePanel = () => {
                 <Flex vertical={true} gap='large'>
                   {/* North America */}
                   <h3>North America</h3>
-                  <Flex wrap={true} gap='large'>
+                  <Flex wrap={true} gap='40px'>
                     {naCountriesJsx}
                   </Flex>
 
                   {/* South America */}
                   <h3>South America</h3>
-                  <Flex wrap={true} gap='large'>
+                  <Flex wrap={true} gap='40px' >
                     {saCountriesJsx}
                   </Flex>
 
                    {/* Europe */}
                   <h3>Europe</h3>
-                  <Flex wrap={true} gap='large'>
+                  <Flex wrap={true} gap='40px'>
                     {euCountriesJsx}
                   </Flex>
 
                   {/* Asia */}
                   <h3>Asia</h3>
-                  <Flex wrap={true} gap='large'>
+                  <Flex wrap={true} gap='40px'>
                     {asiaCountriesJsx}
                   </Flex>
 
                    {/* Middle East */}
                   <h3>Middle East</h3>
-                  <Flex wrap={true} gap='large'>
+                  <Flex wrap={true} gap='40px'>
                     {meCountriesJsx}
                   </Flex>
 
                   {/* Africa */}
                   <h3>Africa</h3>
-                  <Flex wrap={true} gap='large'>
+                  <Flex wrap={true} gap='40px'>
                     {africaCountriesJsx}
                   </Flex>
                 </Flex>
