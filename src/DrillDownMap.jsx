@@ -70,7 +70,7 @@ const DrillDownMap = () => {
                 countrySeries.show();
                 worldSeries.hide(100);
                 backContainer.show();
-                dispatch(select({ data }));
+                dispatch(select(data.id));
             });
         }
     });
@@ -204,10 +204,7 @@ const DrillDownMap = () => {
 
     expandSidePanelContainer.events.on('click', function () {
       dispatch(open());
-      expandSidePanelContainer.hide();
     });
-
-    dispatch(setExpandSidePanelButton({expandSidePanelContainer}));
 
     return () => {
       root.dispose();

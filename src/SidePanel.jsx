@@ -22,7 +22,6 @@ export const SidePanel = () => {
     const dispatch = useDispatch();
     const currentSelectedCountry = useSelector(state => state.selectedCountry.value);
     const isSidePanelOpen = useSelector(state => state.sidePanel.open);
-    const expandSidePanelButton = useSelector(state => state.sidePanel.expandSidePanelButton)
 
     // for handling dragging the side panel to expand/collapse
     const cbHandleMouseMove = React.useCallback(handleMousemove, []);
@@ -30,8 +29,6 @@ export const SidePanel = () => {
 
     const onClose = () => {
         dispatch(close());
-        expandSidePanelButton.expandSidePanelContainer.show();
-        console.log(currentSelectedCountry);
     };
 
     // for handling dragging the side panel to expand/collapse
