@@ -3,6 +3,7 @@ import am5geodata_countries2 from "@amcharts/amcharts5-geodata/data/countries2";
 import { Drawer, Card, Flex } from "antd";
 import { useSelector, useDispatch } from "react-redux";
 import { close } from './redux/slices/sidePanelSlice';
+import { useMap } from "./MapContext";
 import { northAmericaCountries, southAmericaCountries, asiaCountries, middleEastCountries, europeCountries, africaCountries, supportedCountries } from "./Constants";
 import './App.css';
 
@@ -18,6 +19,7 @@ export const SidePanel = () => {
     const dispatch = useDispatch();
     const currentSelectedCountry = useSelector(state => state.selectedCountry.id);
     const isSidePanelOpen = useSelector(state => state.sidePanel.open);
+    const worldMap = useMap();
 
     // for handling dragging the side panel to expand/collapse
     const cbHandleMouseMove = React.useCallback(handleMousemove, []);
@@ -58,6 +60,34 @@ export const SidePanel = () => {
       }
     }
 
+    function handleCountryCardClicked(countryID){
+      console.log("Clicked on card with ID " + {countryID})
+      
+      let dataItem = worldMap.getDataItemById(countryID);
+      let data = dataItem.dataContext;
+
+      // if(supportedCountries.includes(data.id)){
+      //     let zoomAnimation = worldMap.zoomToDataItem(dataItem);
+      //     Promise.all([
+      //         zoomAnimation.waitForStop(),
+      //         am5.net.load(
+      //         'https://cdn.amcharts.com/lib/5/geodata/json/' + data.map + '.json',
+      //         chart
+      //         ),
+      //     ]).then((results) => {
+      //         let geodata = am5.JSONParser.parse(results[1].response);
+      //         countrySeries.setAll({
+      //         geoJSON: geodata,
+      //         fill: data.polygonSettings.fill,
+      //         });
+      //         countrySeries.show();
+      //         worldMap.hide(100);
+      //         backContainer.show();
+      //         dispatch(select(data.id));
+      //     });
+      // }
+    }
+
     // All countries tab, generate cards with flags to choose from 
     let naCountriesJsx = [];
     let saCountriesJsx = [];
@@ -91,6 +121,7 @@ export const SidePanel = () => {
             hoverable
             cover={<img className="country-card" alt={country.country} src={imageSrc}/>}
             key={id}
+            onClick={handleCountryCardClicked(id)}
           >
             <Meta 
               title={<div style={{ fontSize: fontsize, textAlign: 'center' }}>{countryName}</div>}

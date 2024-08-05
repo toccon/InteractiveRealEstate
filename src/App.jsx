@@ -2,6 +2,7 @@ import { useSelector } from 'react-redux';
 import './App.css';
 import DrillDownMap from './DrillDownMap';
 import { SidePanel } from './SidePanel';
+import { MapProvider } from './MapContext'
 
 function App() {
 
@@ -9,8 +10,10 @@ function App() {
 
   return (
     <div className="App">
-      <DrillDownMap/>
-      {isSidePanelOpen && <SidePanel/>}
+      <MapProvider>
+        <DrillDownMap/>
+        {isSidePanelOpen && <SidePanel/>}
+      </MapProvider>
     </div>
   );
 }
