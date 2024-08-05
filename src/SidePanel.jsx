@@ -37,73 +37,73 @@ export const SidePanel = () => {
         document.removeEventListener("mouseup", cbHandleMouseUp);
       }
     
-      // for handling dragging the side panel to expand/collapse
-      function handleMousedown(e) {
-        e.stopPropagation();
-        e.preventDefault();
-        // we will only add listeners when needed, and remove them afterward
-        document.addEventListener("mousemove", cbHandleMouseMove);
-        document.addEventListener("mouseup", cbHandleMouseUp);
-        isResizing = true;
+    // for handling dragging the side panel to expand/collapse
+    function handleMousedown(e) {
+      e.stopPropagation();
+      e.preventDefault();
+      // we will only add listeners when needed, and remove them afterward
+      document.addEventListener("mousemove", cbHandleMouseMove);
+      document.addEventListener("mouseup", cbHandleMouseUp);
+      isResizing = true;
+    }
+  
+    // for handling dragging the side panel to expand/collapse
+    function handleMousemove(e) {
+      let offsetRight =
+        document.body.offsetWidth - (e.clientX - document.body.offsetLeft);
+      let minWidth = 400;
+      let maxWidth = window.innerWidth;
+      if (offsetRight > minWidth && offsetRight < maxWidth) {
+          setWidth(offsetRight);
       }
-    
-      // for handling dragging the side panel to expand/collapse
-      function handleMousemove(e) {
-        let offsetRight =
-          document.body.offsetWidth - (e.clientX - document.body.offsetLeft);
-        let minWidth = 400;
-        let maxWidth = window.innerWidth;
-        if (offsetRight > minWidth && offsetRight < maxWidth) {
-            setWidth(offsetRight);
+    }
+
+    // All countries tab, generate cards with flags to choose from 
+    let naCountriesJsx = [];
+    let saCountriesJsx = [];
+    let asiaCountriesJsx = [];
+    let meCountriesJsx = [];
+    let euCountriesJsx = [];
+    let africaCountriesJsx = [];
+    for (let id of supportedCountries) {
+      if (am5geodata_countries2.hasOwnProperty(id)) {
+        let country = am5geodata_countries2[id];
+        
+        let fontsize = 12; 
+        if(id === "GB" || id === "CZ"){
+          fontsize = 10;
         }
-      }
 
-      // All countries tab, generate cards with flags to choose from 
-      let naCountriesJsx = [];
-      let saCountriesJsx = [];
-      let asiaCountriesJsx = [];
-      let meCountriesJsx = [];
-      let euCountriesJsx = [];
-      let africaCountriesJsx = [];
-      for (let id of supportedCountries) {
-        if (am5geodata_countries2.hasOwnProperty(id)) {
-          let country = am5geodata_countries2[id];
-          
-          let fontsize = 12; 
-          if(id === "GB" || id === "CZ"){
-            fontsize = 10;
-          }
+        let countryName = country.country;
+        if(id === "AE"){
+          countryName = "UAE"
+        }
+        else if(id === "VN"){
+          countryName = "Vietnam"
+        }
 
-          let countryName = country.country;
-          if(id === "AE"){
-            countryName = "UAE"
-          }
-          else if(id === "VN"){
-            countryName = "Vietnam"
-          }
+        // Construct the image filename using the ID
+        let imageSrc = require(`./images/flags/${id}-flag.png`);
 
-          // Construct the image filename using the ID
-          let imageSrc = require(`./images/flags/${id}-flag.png`);
-
-          let jsx = 
-            <Card
-              className="country-card"
-              hoverable
-              cover={<img className="country-card" alt={country.country} src={imageSrc}/>}
-              key={id}
-            >
-              <Meta 
-                title={<div style={{ fontSize: fontsize, textAlign: 'center' }}>{countryName}</div>}
-              />
-            </Card>
-            if(northAmericaCountries.includes(id)) naCountriesJsx.push(jsx);
-            else if(southAmericaCountries.includes(id)) saCountriesJsx.push(jsx);
-            else if(asiaCountries.includes(id)) asiaCountriesJsx.push(jsx);
-            else if(middleEastCountries.includes(id)) meCountriesJsx.push(jsx);
-            else if(europeCountries.includes(id)) euCountriesJsx.push(jsx);
-            else if(africaCountries.includes(id)) africaCountriesJsx.push(jsx);
-        } 
-      }
+        let jsx = 
+          <Card
+            className="country-card"
+            hoverable
+            cover={<img className="country-card" alt={country.country} src={imageSrc}/>}
+            key={id}
+          >
+            <Meta 
+              title={<div style={{ fontSize: fontsize, textAlign: 'center' }}>{countryName}</div>}
+            />
+          </Card>
+          if(northAmericaCountries.includes(id)) naCountriesJsx.push(jsx);
+          else if(southAmericaCountries.includes(id)) saCountriesJsx.push(jsx);
+          else if(asiaCountries.includes(id)) asiaCountriesJsx.push(jsx);
+          else if(middleEastCountries.includes(id)) meCountriesJsx.push(jsx);
+          else if(europeCountries.includes(id)) euCountriesJsx.push(jsx);
+          else if(africaCountries.includes(id)) africaCountriesJsx.push(jsx);
+      } 
+    }
 
     return(
         <Fragment>
@@ -119,7 +119,7 @@ export const SidePanel = () => {
                 {/* resize dragger  */}
                 <div className="sidebar-dragger" onMouseDown={handleMousedown} />
 
-                {/* content */}
+                {/*  if there is a country selected show its data. with no country selected, show country selection pane. */}
                 { (currentSelectedCountry) ?
                 <div>
                   <p>Some contents...Some contents...Some contents...Some contents...Some contents...Some contents...Some contents...Some contents...Some contents...Some contents...Some contents...Some contents...Some contents...Some contents...Some contents...Some contents...Some contents...Some contents...Some contents...Some contents...Some contents...Some contents...Some contents...Some contents...Some contents...Some contents...Some contents...Some contents...Some contents...Some contents...Some contents...Some contents...Some contents...Some contents...Some contents...</p>
