@@ -8,13 +8,13 @@ import { supportedCountries, backButtonSVG } from "./Constants";
 import { useDispatch, useSelector } from 'react-redux';
 import { clear, select } from './redux/slices/selectedCountrySlice';
 import { open } from './redux/slices/sidePanelSlice';
-import { useMapUpdate } from './MapContext';
+import { useChartUpdate } from './MapContext';
 
 const DrillDownMap = () => {
   
   const dispatch = useDispatch()
   const isSidePanelOpen = useSelector(state => state.sidePanel.open);
-  const setWorldSeries = useMapUpdate();
+  const setRootChart = useChartUpdate();
   
   useEffect(() => {
 
@@ -35,7 +35,6 @@ const DrillDownMap = () => {
         exclude: ['AQ'],
       })
     );
-    setWorldSeries(worldSeries);
 
     // add zoom control 
     chart.set("zoomControl", am5map.ZoomControl.new(root, {}));
@@ -208,6 +207,8 @@ const DrillDownMap = () => {
     expandSidePanelContainer.events.on('click', function () {
       dispatch(open());
     });
+
+    setRootChart(chart);
 
     return () => {
       root.dispose();

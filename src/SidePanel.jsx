@@ -1,9 +1,11 @@
 import React, { useState, Fragment } from "react";
+import * as am5 from '@amcharts/amcharts5';
 import am5geodata_countries2 from "@amcharts/amcharts5-geodata/data/countries2";
 import { Drawer, Card, Flex } from "antd";
 import { useSelector, useDispatch } from "react-redux";
+import { select } from './redux/slices/selectedCountrySlice';
 import { close } from './redux/slices/sidePanelSlice';
-import { useMap } from "./MapContext";
+import { useChart } from "./MapContext";
 import { northAmericaCountries, southAmericaCountries, asiaCountries, middleEastCountries, europeCountries, africaCountries, supportedCountries } from "./Constants";
 import './App.css';
 
@@ -19,7 +21,12 @@ export const SidePanel = () => {
     const dispatch = useDispatch();
     const currentSelectedCountry = useSelector(state => state.selectedCountry.id);
     const isSidePanelOpen = useSelector(state => state.sidePanel.open);
-    const worldMap = useMap();
+    
+    // context
+    const chart = useChart();
+    const worldMap = chart.series._values[0];
+    const countryMap = chart.series._values[1];
+    const backContainer = chart.children._values[2];
 
     // for handling dragging the side panel to expand/collapse
     const cbHandleMouseMove = React.useCallback(handleMousemove, []);
@@ -66,26 +73,26 @@ export const SidePanel = () => {
       let dataItem = worldMap.getDataItemById(countryID);
       let data = dataItem.dataContext;
 
-      // if(supportedCountries.includes(data.id)){
-      //     let zoomAnimation = worldMap.zoomToDataItem(dataItem);
-      //     Promise.all([
-      //         zoomAnimation.waitForStop(),
-      //         am5.net.load(
-      //         'https://cdn.amcharts.com/lib/5/geodata/json/' + data.map + '.json',
-      //         chart
-      //         ),
-      //     ]).then((results) => {
-      //         let geodata = am5.JSONParser.parse(results[1].response);
-      //         countrySeries.setAll({
-      //         geoJSON: geodata,
-      //         fill: data.polygonSettings.fill,
-      //         });
-      //         countrySeries.show();
-      //         worldMap.hide(100);
-      //         backContainer.show();
-      //         dispatch(select(data.id));
-      //     });
-      // }
+      if(supportedCountries.includes(data.id)){
+          let zoomAnimation = worldMap.zoomToDataItem(dataItem);
+          Promise.all([
+              zoomAnimation.waitForStop(),
+              am5.net.load(
+              'https://cdn.amcharts.com/lib/5/geodata/json/' + data.map + '.json',
+              chart
+              ),
+          ]).then((results) => {
+              let geodata = am5.JSONParser.parse(results[1].response);
+              countryMap.setAll({
+              geoJSON: geodata,
+              fill: data.polygonSettings.fill,
+              });
+              countryMap.show();
+              worldMap.hide(100);
+              backContainer.show();
+              dispatch(select(data.id));
+          });
+      }
     }
 
     // All countries tab, generate cards with flags to choose from 
@@ -121,7 +128,7 @@ export const SidePanel = () => {
             hoverable
             cover={<img className="country-card" alt={country.country} src={imageSrc}/>}
             key={id}
-            onClick={handleCountryCardClicked(id)}
+            onClick={() => handleCountryCardClicked(id)}
           >
             <Meta 
               title={<div style={{ fontSize: fontsize, textAlign: 'center' }}>{countryName}</div>}

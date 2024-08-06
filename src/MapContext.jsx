@@ -1,28 +1,35 @@
 import React, { useState, createContext, useContext } from 'react'
 
-const MapContext = createContext(); 
-const MapUpdateContext = createContext(); 
+// Can access the root, worldSeries, countrySeries, expandButoon, backButton and more from the chart
+// To access root:              chart._root
+// To access world series:      chart.
+// To access country series:    chart.
+// To access back container: 
+// To access expand container: 
 
-export function useMap(){
-    return useContext(MapContext);
+const ChartContext = createContext(); 
+const ChartUpdateContext = createContext(); 
+
+export function useChart(){
+    return useContext(ChartContext);
 }
 
-export function useMapUpdate(){
-    return useContext(MapUpdateContext);
+export function useChartUpdate(){
+    return useContext(ChartUpdateContext);
 }
 
 export const MapProvider = ({ children }) => {
-    const [worldMap, setWorldMap] = useState(null); 
+    const [chart, setChart] = useState(null); 
 
-    function setWorldSeries(worldSeries){
-        setWorldMap(worldSeries);
+    function setRootChart(chart){
+        setChart(chart);
     }
 
     return(
-        <MapContext.Provider value={worldMap}>
-            <MapUpdateContext.Provider value={setWorldSeries}>
+        <ChartContext.Provider value={chart}>
+            <ChartUpdateContext.Provider value={setRootChart}>
                 {children}
-            </MapUpdateContext.Provider>
-        </MapContext.Provider>
+            </ChartUpdateContext.Provider>
+        </ChartContext.Provider>
     )
 }
