@@ -3,12 +3,12 @@ import * as am5 from '@amcharts/amcharts5';
 import am5geodata_countries2 from "@amcharts/amcharts5-geodata/data/countries2";
 import { Drawer, Card, Flex } from "antd";
 import { useSelector, useDispatch } from "react-redux";
-import { select } from './redux/slices/selectedCountrySlice';
-import { close } from './redux/slices/sidePanelSlice';
-import { useChart } from "./MapContext";
-import { northAmericaCountries, southAmericaCountries, asiaCountries, middleEastCountries, europeCountries, africaCountries, supportedCountries } from "./Constants";
+import { select } from '../redux/slices/selectedCountrySlice';
+import { close } from '../redux/slices/sidePanelSlice';
+import { useChart } from "../map/MapContext";
+import { northAmericaCountries, southAmericaCountries, asiaCountries, middleEastCountries, europeCountries, africaCountries, supportedCountries } from "../Constants";
 import { SidePanelDragger } from "./SidePanelDragger";
-import './App.css';
+import '../App.css';
 
 const { Meta } = Card;
 
@@ -87,7 +87,7 @@ export const SidePanel = () => {
         }
 
         // Construct the image filename using the ID
-        let imageSrc = require(`./images/flags/${id}-flag.png`);
+        let imageSrc = require(`../images/flags/${id}-flag.png`);
 
         let jsx = 
           <Card

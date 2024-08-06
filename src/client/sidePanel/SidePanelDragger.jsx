@@ -1,9 +1,9 @@
 import React from 'react'
 
+let isResizing = null;
 export const SidePanelDragger = ({setWidth}) =>{
     const cbHandleMouseMove = React.useCallback(handleMousemove, []);
     const cbHandleMouseUp = React.useCallback(handleMouseup, []);
-    let isResizing = false;
 
     function handleMousedown(e) {
         e.stopPropagation();

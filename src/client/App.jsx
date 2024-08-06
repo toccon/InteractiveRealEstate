@@ -1,8 +1,8 @@
 import { useSelector } from 'react-redux';
 import './App.css';
-import DrillDownMap from './DrillDownMap';
-import { SidePanel } from './SidePanel';
-import { MapProvider } from './MapContext'
+import DrillDownMap from './map/DrillDownMap';
+import { SidePanel } from './sidePanel/SidePanel';
+import { MapProvider } from './map/MapContext'
 
 function App() {
 
