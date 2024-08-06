@@ -7,11 +7,10 @@ import { select } from './redux/slices/selectedCountrySlice';
 import { close } from './redux/slices/sidePanelSlice';
 import { useChart } from "./MapContext";
 import { northAmericaCountries, southAmericaCountries, asiaCountries, middleEastCountries, europeCountries, africaCountries, supportedCountries } from "./Constants";
+import { SidePanelDragger } from "./SidePanelDragger";
 import './App.css';
 
 const { Meta } = Card;
-
-let isResizing = null;
 
 export const SidePanel = () => {
     // local state
@@ -28,45 +27,13 @@ export const SidePanel = () => {
     const countryMap = chart.series._values[1];
     const backContainer = chart.children._values[2];
 
-    // for handling dragging the side panel to expand/collapse
-    const cbHandleMouseMove = React.useCallback(handleMousemove, []);
-    const cbHandleMouseUp = React.useCallback(handleMouseup, []);
-
-    const onClose = () => {
+    // side panel is closed by clicking 'x' 
+    function onClose(){
         dispatch(close());
     };
 
-    // for handling dragging the side panel to expand/collapse
-    function handleMouseup(e) {
-        if (!isResizing) {
-          return;
-        }
-        isResizing = false;
-        document.removeEventListener("mousemove", cbHandleMouseMove);
-        document.removeEventListener("mouseup", cbHandleMouseUp);
-      }
-    
-    // for handling dragging the side panel to expand/collapse
-    function handleMousedown(e) {
-      e.stopPropagation();
-      e.preventDefault();
-      // we will only add listeners when needed, and remove them afterward
-      document.addEventListener("mousemove", cbHandleMouseMove);
-      document.addEventListener("mouseup", cbHandleMouseUp);
-      isResizing = true;
-    }
-  
-    // for handling dragging the side panel to expand/collapse
-    function handleMousemove(e) {
-      let offsetRight =
-        document.body.offsetWidth - (e.clientX - document.body.offsetLeft);
-      let minWidth = 400;
-      let maxWidth = window.innerWidth;
-      if (offsetRight > minWidth && offsetRight < maxWidth) {
-          setWidth(offsetRight);
-      }
-    }
-
+    // when no countries are selected a menu of coutry cards is displayed
+    // when a country card is clicked, zoom into the country and set it as selected in the redux store
     function handleCountryCardClicked(countryID){
       console.log("Clicked on card with ID " + {countryID})
       
@@ -155,7 +122,7 @@ export const SidePanel = () => {
                 mask={false}
             >
                 {/* resize dragger  */}
-                <div className="sidebar-dragger" onMouseDown={handleMousedown} />
+                <SidePanelDragger setWidth={setWidth}/>
 
                 {/*  if there is a country selected show its data. with no country selected, show country selection pane. */}
                 { (currentSelectedCountry) ?
