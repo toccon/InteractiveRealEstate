@@ -9,15 +9,42 @@ import { FixedFooter } from './footer/FixedFooter';
 
 function App() {
 
-  const isSidePanelOpen = useSelector(state => state.sidePanel.open);
+  const isSidePanelOpen = useSelector(state => state.sidePanel.open)
+  const selectedTab = useSelector(state => state.selectedTab.tabName)
+
+  const displayContent = () =>{
+    if(selectedTab === 'explore'){
+      return(
+        <MapProvider>
+          <DrillDownMap/>
+          {isSidePanelOpen && <SidePanel/>}
+        </MapProvider>
+      )
+    } else if(selectedTab === 'home'){
+      return(
+        <div>
+          <h1>home page</h1>
+        </div>
+      )
+    } else if(selectedTab === 'contact'){
+      return(
+        <div>
+          <h1>contact page</h1>
+        </div>
+      )
+    } else if(selectedTab === 'pricing'){
+      return(
+        <div>
+          <h1>pricing page</h1>
+        </div>
+      )
+    }
+  }
 
   return (
     <Layout>
       <FixedHeader/>
-      <MapProvider>
-        <DrillDownMap/>
-        {isSidePanelOpen && <SidePanel/>}
-      </MapProvider>
+        {displayContent()}
       <FixedFooter/>
     </Layout>
   );
