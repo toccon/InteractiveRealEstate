@@ -215,7 +215,7 @@ const DrillDownMap = () => {
     };
   }, []);
 
-  return <div id="chartdiv" style={{ width: '100vw', height: '100vh', margin: 0, padding: 0 }}></div>;
+  return <div id="chartdiv" style={{ width: '100vw', height: '89vh', margin: 0, padding: 0 }}></div>;
 };
 
 export default DrillDownMap;

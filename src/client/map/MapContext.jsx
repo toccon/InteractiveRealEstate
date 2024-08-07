@@ -1,11 +1,12 @@
 import React, { useState, createContext, useContext } from 'react'
 
 // Can access the root, worldSeries, countrySeries, expandButoon, backButton and more from the chart
+// Example usage from a component within the context: 
+// const chart = useChart();
 // To access root:              chart._root
-// To access world series:      chart.
-// To access country series:    chart.
-// To access back container: 
-// To access expand container: 
+// To access world series:      chart.series._values[0]
+// To access country series:    chart.series._values[1]
+// To access back container:    chart.children._values[2]
 
 const ChartContext = createContext(); 
 const ChartUpdateContext = createContext(); 

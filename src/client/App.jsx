@@ -1,20 +1,25 @@
 import { useSelector } from 'react-redux';
 import './App.css';
+import { Layout } from 'antd';
 import DrillDownMap from './map/DrillDownMap';
+import { MapProvider } from './map/MapContext';
 import { SidePanel } from './sidePanel/SidePanel';
-import { MapProvider } from './map/MapContext'
+import { FixedHeader } from './header/FixedHeader';
+import { FixedFooter } from './footer/FixedFooter';
 
 function App() {
 
   const isSidePanelOpen = useSelector(state => state.sidePanel.open);
 
   return (
-    <div className="App">
+    <Layout>
+      <FixedHeader/>
       <MapProvider>
         <DrillDownMap/>
         {isSidePanelOpen && <SidePanel/>}
       </MapProvider>
-    </div>
+      <FixedFooter/>
+    </Layout>
   );
 }
 
