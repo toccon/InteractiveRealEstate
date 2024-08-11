@@ -73,6 +73,7 @@ const DrillDownMap = () => {
                 worldSeries.hide(100);
                 backContainer.show();
                 dispatch(select(data.id));
+                dispatch(open());
             });
         }
     });
