@@ -1,7 +1,8 @@
 import React, { useState, Fragment } from "react";
 import * as am5 from '@amcharts/amcharts5';
 import am5geodata_countries2 from "@amcharts/amcharts5-geodata/data/countries2";
-import { Drawer, Card, Flex } from "antd";
+import { Drawer, Card, Flex, Button } from "antd";
+import { ArrowLeftOutlined } from '@ant-design/icons';
 import { useSelector, useDispatch } from "react-redux";
 import { select } from '../redux/slices/selectedCountrySlice';
 import { close } from '../redux/slices/sidePanelSlice';
@@ -114,13 +115,29 @@ export const SidePanel = () => {
         <Fragment>
             {/* main panel props */}
             <Drawer
-                title={(currentSelectedCountry) ? "Drawer" : "All countries"}
-                placement="right"
-                width={width}
-                onClose={onClose}
-                open={isSidePanelOpen}
-                mask={false}
-            >
+              title={
+                  currentSelectedCountry ? (
+                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                          <span>{am5geodata_countries2[currentSelectedCountry].country}</span>
+                          <Button
+                              className="side-panel-back-button" // Add class name
+                              onClick={() => console.log('Back to world map clicked!')} // Add your button click handler here
+                          >
+                              <ArrowLeftOutlined style={{ marginRight: '8px', color: 'white' }} /> {/* Ant Design icon */}
+                              Back to world map
+                          </Button>
+                      </div>
+                  ) : (
+                      "All countries"
+                  )
+              }
+              placement="right"
+              width={width}
+              onClose={onClose}
+              open={isSidePanelOpen}
+              mask={false}
+              className="explore-side-panel"
+          >
                 {/* resize dragger  */}
                 <SidePanelDragger setWidth={setWidth}/>
 
