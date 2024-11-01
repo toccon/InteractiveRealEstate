@@ -121,43 +121,48 @@ const DrillDownMap = () => {
     }
     worldSeries.data.setAll(data);
 
-    // Back button and label when drilled in 
-    let backContainer = chart.children.push(
-      am5.Container.new(root, {
-        x: am5.p0,
-        centerX: am5.p0,
-        dx: -10,
-        paddingTop: 5,
-        paddingLeft: 10,
-        paddingBottom: 5,
-        y: 30,
-        interactiveChildren: false,
-        layout: root.horizontalLayout,
-        cursorOverStyle: 'pointer',
-        background: am5.RoundedRectangle.new(root, {
-          fill: am5.color(0xffffff),
-          fillOpacity: 0.2,
-        }),
-        visible: false,
-      })
-    );
-    
-    backContainer.children.push(
-      am5.Label.new(root, {
-        text: 'Back to world map',
-        centerY: am5.p50,
-      })
-    );
-    
-    backContainer.children.push(
-      am5.Graphics.new(root, {
-        width: 32,
-        height: 32,
-        centerY: am5.p50,
-        fill: am5.color(0x555555),
-        svgPath: backButtonSVG,
-      })
-    );
+  // Back button and label when drilled in 
+  let backContainer = chart.children.push(
+    am5.Container.new(root, {
+      x: am5.p0,
+      y: 30,
+      paddingLeft: 0, // Adding some left padding for better spacing
+      layout: root.horizontalLayout,
+      cursorOverStyle: 'pointer',
+      visible: false,
+      background: am5.RoundedRectangle.new(root, {
+        fill: am5.color(0x1890ff), // Vibrant blue color similar to the login button
+        fillOpacity: 0.8, // Slightly higher opacity for a bolder look
+        stroke: am5.color(0xffffff), // White border for contrast
+        strokeWidth: 2, // Adds a border width
+        cornerRadius: 8, // Adds rounded corners for a softer appearance
+      }),
+    })
+  );
+
+  // Back label with improved styling
+  backContainer.children.push(
+    am5.Label.new(root, {
+      text: 'Back to world map',
+      centerY: am5.p50,
+      fill: am5.color(0xffffff), // White text for better contrast
+      fontSize: '16px', // Larger font size for better visibility
+      fontWeight: 'bold', // Bold text for emphasis
+    })
+  );
+
+  // Back button graphic with enhanced styling
+  backContainer.children.push(
+    am5.Graphics.new(root, {
+      width: 32,
+      height: 32,
+      centerY: am5.p50,
+      fill: am5.color(0xffffff), // White fill for contrast
+      svgPath: backButtonSVG,
+      stroke: am5.color(0x1890ff), // Vibrant blue stroke to match the background
+      strokeWidth: 1, // Adds a border to the graphic
+    })
+  );
 
     backContainer.events.on('click', function () {
       chart.goHome();
