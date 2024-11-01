@@ -2,7 +2,8 @@ import React from 'react';
 import { useSelector, useDispatch } from "react-redux";
 import { selectTab } from '../redux/slices/selectedTabSlice'; 
 import { close } from '../redux/slices/sidePanelSlice';
-import { Layout, Menu } from 'antd';
+import { Layout, Menu, Button } from 'antd';
+import { LoginOutlined } from '@ant-design/icons';
 import headerLogo from '../images/logos/png/logo-no-background.png';
 const { Header } = Layout;
 
@@ -69,19 +70,29 @@ export const FixedHeader = () =>{
         display: 'flex',
         alignItems: 'center',
         background: '#ffffff'
-      }}
-    >
-          <img className="header-logo" src={headerLogo} alt=""
-          style={{
-              height: '50%'
-          }}/>
+      }}>
+          <img className="header-logo" src={headerLogo} alt="" style={{ height: '50%'}}/>
           <Menu theme="light" mode="horizontal" defaultSelectedKeys={['explore']} items={items}
           style={{
               flex: 1,
               minWidth: 0,
               paddingInline: '5%'
+          }}/>
+        <Button
+          type="primary"
+          shape="round"
+          icon={<LoginOutlined />}
+          size="middle"
+          style={{
+            backgroundColor: '#1890ff',
+            borderColor: '#1890ff',
+            color: '#fff',
+            fontWeight: 'bold',
+            padding: '0 20px',
           }}
-          />
+        >
+          Login
+        </Button>
     </Header>
   )
 }
