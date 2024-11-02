@@ -4,7 +4,7 @@ import am5geodata_countries2 from "@amcharts/amcharts5-geodata/data/countries2";
 import { Drawer, Card, Flex, Button } from "antd";
 import { ArrowLeftOutlined } from '@ant-design/icons';
 import { useSelector, useDispatch } from "react-redux";
-import { select } from '../redux/slices/selectedCountrySlice';
+import { select, clear } from '../redux/slices/selectedCountrySlice';
 import { close } from '../redux/slices/sidePanelSlice';
 import { useChart } from "../map/MapContext";
 import { northAmericaCountries, southAmericaCountries, asiaCountries, middleEastCountries, europeCountries, africaCountries, supportedCountries } from "../Constants";
@@ -61,6 +61,14 @@ export const SidePanel = () => {
               dispatch(select(data.id));
           });
       }
+    }
+
+    function handleBackButtonClicked(){
+      chart.goHome();
+      worldMap.show();
+      countryMap.hide();
+      backContainer.hide();
+      dispatch(clear());
     }
 
     // All countries tab, generate cards with flags to choose from 
@@ -120,10 +128,10 @@ export const SidePanel = () => {
                       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                           <span>{am5geodata_countries2[currentSelectedCountry].country}</span>
                           <Button
-                              className="side-panel-back-button" // Add class name
-                              onClick={() => console.log('Back to world map clicked!')} // Add your button click handler here
+                              className="side-panel-back-button" 
+                              onClick={handleBackButtonClicked} 
                           >
-                              <ArrowLeftOutlined style={{ marginRight: '8px', color: 'white' }} /> {/* Ant Design icon */}
+                              <ArrowLeftOutlined style={{ marginRight: '8px', color: 'white' }} />
                               Back to world map
                           </Button>
                       </div>
