@@ -1,7 +1,7 @@
 import React, { useState, Fragment } from "react";
 import * as am5 from '@amcharts/amcharts5';
 import am5geodata_countries2 from "@amcharts/amcharts5-geodata/data/countries2";
-import { Drawer, Card, Flex, Button } from "antd";
+import { Drawer, Card, Flex, Button, Tabs } from "antd";
 import { ArrowLeftOutlined } from '@ant-design/icons';
 import { useSelector, useDispatch } from "react-redux";
 import { select, clear } from '../redux/slices/selectedCountrySlice';
@@ -12,6 +12,7 @@ import { SidePanelDragger } from "./SidePanelDragger";
 import '../App.css';
 
 const { Meta } = Card;
+const { TabPane } = Tabs;
 
 export const SidePanel = () => {
     // local state
@@ -63,12 +64,98 @@ export const SidePanel = () => {
       }
     }
 
+    // handler when a country is selected and the back button is clicked is the side panel
     function handleBackButtonClicked(){
       chart.goHome();
       worldMap.show();
       countryMap.hide();
       backContainer.hide();
       dispatch(clear());
+    }
+
+    // when a country is selected, retrieve all of the data for this country and display it 
+    function generateCountryInfo(country){
+      // connect to database 
+
+      // retrieve all data about this country 
+
+      // display it nicely
+      let jsx = 
+      <Tabs defaultActiveKey="1">
+        <TabPane tab="Overview" key="1">
+            {/* Overview content */}
+            <div>
+                <p>Country: {am5geodata_countries2[country].country}</p>
+                <p>Population:</p>
+                <p>Capital:</p>
+            </div>
+        </TabPane>
+        <TabPane tab="Travel" key="2">
+            {/* Travel content */}
+            <div>
+                <p>Visa Requirements:</p>
+                <p>Popular Attractions:</p>
+                <p>Average Daily Cost:</p>
+            </div>
+        </TabPane>
+        <TabPane tab="Real Estate" key="3">
+            {/* Real estate content */}
+            <div>
+                <p>Average Property Price:</p>
+                <p>Rental Yield:</p>
+                <p>Transaction Costs:</p>
+            </div>
+        </TabPane>
+        <TabPane tab="Overview" key="4">
+            {/* Overview content */}
+            <div>
+                <p>Country: {am5geodata_countries2[country].country}</p>
+                <p>Population:</p>
+                <p>Capital:</p>
+            </div>
+        </TabPane>
+        <TabPane tab="Travel" key="5">
+            {/* Travel content */}
+            <div>
+                <p>Visa Requirements:</p>
+                <p>Popular Attractions:</p>
+                <p>Average Daily Cost:</p>
+            </div>
+        </TabPane>
+        <TabPane tab="Real Estate" key="6">
+            {/* Real estate content */}
+            <div>
+                <p>Average Property Price:</p>
+                <p>Rental Yield:</p>
+                <p>Transaction Costs:</p>
+            </div>
+        </TabPane>
+        <TabPane tab="Overview" key="7">
+            {/* Overview content */}
+            <div>
+                <p>Country: {am5geodata_countries2[country].country}</p>
+                <p>Population:</p>
+                <p>Capital:</p>
+            </div>
+        </TabPane>
+        <TabPane tab="Travel" key="8">
+            {/* Travel content */}
+            <div>
+                <p>Visa Requirements:</p>
+                <p>Popular Attractions:</p>
+                <p>Average Daily Cost:</p>
+            </div>
+        </TabPane>
+        <TabPane tab="Real Estate" key="9">
+            {/* Real estate content */}
+            <div>
+                <p>Average Property Price:</p>
+                <p>Rental Yield:</p>
+                <p>Transaction Costs:</p>
+            </div>
+        </TabPane>
+      </Tabs>
+      return jsx; 
     }
 
     // All countries tab, generate cards with flags to choose from 
@@ -150,12 +237,9 @@ export const SidePanel = () => {
                 <SidePanelDragger setWidth={setWidth}/>
 
                 {/*  if there is a country selected show its data. with no country selected, show country selection pane. */}
-                { (currentSelectedCountry) ?
-                <div>
-                  <p>Some contents...Some contents...Some contents...Some contents...Some contents...Some contents...Some contents...Some contents...Some contents...Some contents...Some contents...Some contents...Some contents...Some contents...Some contents...Some contents...Some contents...Some contents...Some contents...Some contents...Some contents...Some contents...Some contents...Some contents...Some contents...Some contents...Some contents...Some contents...Some contents...Some contents...Some contents...Some contents...Some contents...Some contents...Some contents...</p>
-                  <p>Some contents...</p>
-                  <p>Some contents...</p>
-                </div>
+                { (currentSelectedCountry) ? (
+                  generateCountryInfo(currentSelectedCountry)
+                )
                 : 
                 <Flex vertical={true} gap='large'>
                   {/* North America */}

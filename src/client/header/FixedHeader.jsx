@@ -78,6 +78,7 @@ export const FixedHeader = () =>{
               minWidth: 0,
               paddingInline: '5%'
           }}/>
+        {/* Log in button */}
         <Button
           type="primary"
           shape="round"
