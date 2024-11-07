@@ -11,8 +11,6 @@ export const FixedHeader = () =>{
   // Create tabs
   const homeTabName = "Home"
   const exploreTabName = "Explore"
-  const contactTabName = "Contact"
-  const pricingTabName = "Pricing"
 
   const homeTab = {
     key: homeTabName.toLowerCase(),
@@ -28,21 +26,7 @@ export const FixedHeader = () =>{
     onClick: () => handleTabClicked(exploreTabName.toLowerCase())
   }
 
-  const contactTab = {
-    key: contactTabName.toLowerCase(),
-    label: contactTabName,
-    style: { paddingInline: '5%' },
-    onClick: () => handleTabClicked(contactTabName.toLowerCase())
-  }
-
-  const pricingTab = {
-    key: pricingTabName.toLowerCase(),
-    label: pricingTabName,
-    style: { paddingInline: '5%' },
-    onClick: () => handleTabClicked(pricingTabName.toLowerCase())
-  }
-
-  const items = [homeTab, exploreTab, contactTab, pricingTab]
+  const items = [homeTab, exploreTab]
   
   // When a tab is clicked, set the selected tab in the redux store to render the correct components in App.jsx
   const dispatch = useDispatch()

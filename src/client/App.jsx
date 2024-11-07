@@ -21,28 +21,12 @@ function App() {
             {isSidePanelOpen && <SidePanel />}
           </MapProvider>
         );
-  
       case 'home':
         return (
           <div>
             <h1>home page</h1>
           </div>
         );
-  
-      case 'contact':
-        return (
-          <div>
-            <h1>contact page</h1>
-          </div>
-        );
-  
-      case 'pricing':
-        return (
-          <div>
-            <h1>pricing page</h1>
-          </div>
-        );
-  
       default:
         return (
           <div>
