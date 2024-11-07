@@ -106,54 +106,6 @@ export const SidePanel = () => {
                 <p>Transaction Costs:</p>
             </div>
         </TabPane>
-        <TabPane tab="Overview" key="4">
-            {/* Overview content */}
-            <div>
-                <p>Country: {am5geodata_countries2[country].country}</p>
-                <p>Population:</p>
-                <p>Capital:</p>
-            </div>
-        </TabPane>
-        <TabPane tab="Travel" key="5">
-            {/* Travel content */}
-            <div>
-                <p>Visa Requirements:</p>
-                <p>Popular Attractions:</p>
-                <p>Average Daily Cost:</p>
-            </div>
-        </TabPane>
-        <TabPane tab="Real Estate" key="6">
-            {/* Real estate content */}
-            <div>
-                <p>Average Property Price:</p>
-                <p>Rental Yield:</p>
-                <p>Transaction Costs:</p>
-            </div>
-        </TabPane>
-        <TabPane tab="Overview" key="7">
-            {/* Overview content */}
-            <div>
-                <p>Country: {am5geodata_countries2[country].country}</p>
-                <p>Population:</p>
-                <p>Capital:</p>
-            </div>
-        </TabPane>
-        <TabPane tab="Travel" key="8">
-            {/* Travel content */}
-            <div>
-                <p>Visa Requirements:</p>
-                <p>Popular Attractions:</p>
-                <p>Average Daily Cost:</p>
-            </div>
-        </TabPane>
-        <TabPane tab="Real Estate" key="9">
-            {/* Real estate content */}
-            <div>
-                <p>Average Property Price:</p>
-                <p>Rental Yield:</p>
-                <p>Transaction Costs:</p>
-            </div>
-        </TabPane>
       </Tabs>
       return jsx; 
     }
