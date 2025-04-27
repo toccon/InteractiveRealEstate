@@ -2,82 +2,67 @@ import React from 'react';
 import { useSelector, useDispatch } from "react-redux";
 import { selectTab } from '../redux/slices/selectedTabSlice'; 
 import { close } from '../redux/slices/sidePanelSlice';
-import { Layout, Menu, Button } from 'antd';
-import { LoginOutlined } from '@ant-design/icons';
+import { Layout } from 'antd';
 import headerLogo from '../images/logos/png/logo-no-background.png';
+import './FixedHeader.css'; // <-- We'll use a small custom CSS file
+
 const { Header } = Layout;
 
-export const FixedHeader = () =>{
-  // Create tabs
-  const homeTabName = "Home"
-  const exploreTabName = "Explore"
+export const FixedHeader = () => {
+  const dispatch = useDispatch();
+  const currentSelectedTab = useSelector(state => state.selectedTab.tabName);
 
-  const homeTab = {
-    key: homeTabName.toLowerCase(),
-    label: homeTabName,
-    style: { paddingInline: '5%' },
-    onClick: () => handleTabClicked(homeTabName.toLowerCase())
-  }
-
-  const exploreTab = {
-    key: exploreTabName.toLowerCase(),
-    label: exploreTabName,
-    style: { paddingInline: '5%' },
-    onClick: () => handleTabClicked(exploreTabName.toLowerCase())
-  }
-
-  const items = [homeTab, exploreTab]
-  
-  // When a tab is clicked, set the selected tab in the redux store to render the correct components in App.jsx
-  const dispatch = useDispatch()
-  const currentSelectedTab = useSelector(state => state.selectedTab.tabName)
-  function handleTabClicked(tabName){
-    if(tabName !== currentSelectedTab){
-      // close side panel if switching from explore tab
-      if(currentSelectedTab === 'explore'){
-        dispatch(close())
+  const homeTabName = "Home";
+  const exploreTabName = "Explore";
+  const pricingTabName = "Pricing";
+  const contactTabName = "Contact"
+  function handleTabClicked(tabName) {
+    if (tabName !== currentSelectedTab) {
+      if (currentSelectedTab === 'explore') {
+        dispatch(close());
       }
-      console.log(tabName)
-      dispatch(selectTab(tabName))
+      dispatch(selectTab(tabName));
     }
   }
 
   return (
-      <Header
-      style={{
-        position: 'sticky',
-        top: 0,
-        zIndex: 1,
-        width: '100%',
-        height: '5vh',
-        lineHeight: '5vh',
-        display: 'flex',
-        alignItems: 'center',
-        background: '#ffffff'
-      }}>
-          <img className="header-logo" src={headerLogo} alt="" style={{ height: '50%'}}/>
-          <Menu theme="light" mode="horizontal" defaultSelectedKeys={['explore']} items={items}
-          style={{
-              flex: 1,
-              minWidth: 0,
-              paddingInline: '5%'
-          }}/>
-        {/* Log in button */}
-        <Button
-          type="primary"
-          shape="round"
-          icon={<LoginOutlined />}
-          size="middle"
-          style={{
-            backgroundColor: '#1890ff',
-            borderColor: '#1890ff',
-            color: '#fff',
-            fontWeight: 'bold',
-            padding: '0 20px',
-          }}
+    <Header className="fixed-header">
+      <img
+        className="header-logo"
+        src={headerLogo}
+        alt="Logo"
+      />
+
+      <nav className="header-tabs">
+        <div
+          className={`tab-item ${currentSelectedTab === 'home' ? 'active' : ''}`}
+          onClick={() => handleTabClicked(homeTabName.toLowerCase())}
         >
-          Login
-        </Button>
+          {homeTabName}
+        </div>
+        <div
+          className={`tab-item ${currentSelectedTab === 'explore' ? 'active' : ''}`}
+          onClick={() => handleTabClicked(exploreTabName.toLowerCase())}
+        >
+          {exploreTabName}
+        </div>
+        <div
+          className={`tab-item ${currentSelectedTab === 'pricing' ? 'active' : ''}`}
+          onClick={() => handleTabClicked(pricingTabName.toLowerCase())}
+        >
+          {pricingTabName}
+        </div>
+        <div
+          className={`tab-item ${currentSelectedTab === 'contact' ? 'active' : ''}`}
+          onClick={() => handleTabClicked(contactTabName.toLowerCase())}
+        >
+          {contactTabName}
+        </div>
+      </nav>
+
+      <button className="login-button">
+        Login
+      </button>
     </Header>
-  )
-}
+  );
+};
