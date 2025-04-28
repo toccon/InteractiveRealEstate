@@ -3,7 +3,6 @@ import { useSelector, useDispatch } from "react-redux";
 import { selectTab } from '../redux/slices/selectedTabSlice'; 
 import { close } from '../redux/slices/sidePanelSlice';
 import { Layout } from 'antd';
-import headerLogo from '../images/logos/png/logo-no-background.png';
 import './FixedHeader.css'; // <-- We'll use a small custom CSS file
 
 const { Header } = Layout;
@@ -29,7 +28,7 @@ export const FixedHeader = () => {
     <Header className="fixed-header">
       <img
         className="header-logo"
-        src={headerLogo}
+        src="/images/logos/png/logo-no-background.png"
         alt="Logo"
       />
 

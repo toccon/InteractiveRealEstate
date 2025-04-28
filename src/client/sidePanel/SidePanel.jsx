@@ -135,7 +135,7 @@ export const SidePanel = () => {
         }
 
         // Construct the image filename using the ID
-        let imageSrc = require(`../images/flags/${id}-flag.png`);
+        let imageSrc = `/images/flags/${id}-flag.png`;
 
         let jsx = 
           <Card
