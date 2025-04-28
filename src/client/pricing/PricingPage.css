@@ -1,0 +1,87 @@
+.pricing-container {
+    padding: 60px 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+    text-align: center;
+    font-family: 'Arial', sans-serif;
+  }
+  
+  .pricing-title {
+    font-size: 42px;
+    color: #003366;
+    margin-bottom: 10px;
+  }
+  
+  .pricing-subtitle {
+    font-size: 18px;
+    color: #555;
+    margin-bottom: 40px;
+  }
+  
+  .pricing-tiers {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 30px;
+  }
+  
+  .pricing-card {
+    background: #fff;
+    border: 1px solid #eee;
+    border-radius: 12px;
+    padding: 30px 20px;
+    width: 300px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .pricing-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+  }
+  
+  .price {
+    font-size: 36px;
+    font-weight: bold;
+    color: #003366;
+    margin: 20px 0;
+  }
+  
+  .price span {
+    font-size: 16px;
+    color: #777;
+  }
+  
+  .description {
+    font-size: 16px;
+    color: #666;
+    margin-bottom: 20px;
+  }
+  
+  .feature-list {
+    list-style: none;
+    padding: 0;
+    margin-bottom: 20px;
+  }
+  
+  .feature-list li {
+    margin: 10px 0;
+    font-size: 15px;
+    color: #333;
+  }
+  
+  .select-button {
+    background-color: #003366;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 30px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .select-button:hover {
+    background-color: #0050b3;
+  }
+  

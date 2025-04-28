@@ -7,6 +7,8 @@ import { SidePanel } from './sidePanel/SidePanel';
 import { FixedHeader } from './header/FixedHeader';
 import { FixedFooter } from './footer/FixedFooter';
 import HomePage from './home/HomePage';
+import PricingPage from './pricing/PricingPage';
+import ContactPage from './contact/ContactPage';
 
 function App() {
 
@@ -30,14 +32,14 @@ function App() {
         );
       case 'pricing':
         return (
-          <div>
-            <h1>pricing page</h1>
+          <div className="pricing-page-container">
+            <PricingPage />
           </div>
         );
       case 'contact':
         return (
-          <div>
-            <h1>contact page</h1>
+          <div className="contact-page-container">
+            <ContactPage />
           </div>
         );
       default:

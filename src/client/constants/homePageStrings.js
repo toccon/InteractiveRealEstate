@@ -31,9 +31,6 @@ const homePageStrings = {
         },
       ],
     },
-    footer: {
-      text: "RealMap ©2025 Created by Nicholas Tocco",
-    },
   };
   
   export default homePageStrings;

@@ -5,7 +5,7 @@ import homePageStrings from '../constants/homePageStrings';
 import './HomePage.css';
 
 const HomePage = () => {
-  const { hero, whatIsRealMap, howItWorks, footer } = homePageStrings;
+  const { hero, whatIsRealMap, howItWorks } = homePageStrings;
   const dispatch = useDispatch();
 
   return (
