@@ -54,10 +54,6 @@ const HomePage = () => {
           ))}
         </div>
       </section>
-
-      <section className="footer-section">
-        <p>{footer.text}</p>
-      </section>
     </div>
   );
 };
