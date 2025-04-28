@@ -6,6 +6,7 @@ import { MapProvider } from './map/MapContext';
 import { SidePanel } from './sidePanel/SidePanel';
 import { FixedHeader } from './header/FixedHeader';
 import { FixedFooter } from './footer/FixedFooter';
+import HomePage from './home/HomePage';
 
 function App() {
 
@@ -23,8 +24,20 @@ function App() {
         );
       case 'home':
         return (
+          <div className="home-page-container">
+            <HomePage />
+          </div>
+        );
+      case 'pricing':
+        return (
           <div>
-            <h1>home page</h1>
+            <h1>pricing page</h1>
+          </div>
+        );
+      case 'contact':
+        return (
+          <div>
+            <h1>contact page</h1>
           </div>
         );
       default:
