@@ -82,12 +82,15 @@ export const FixedHeader = () => {
         </nav>
 
         {currentUser ? (
-          <button className="profile-button" onClick={() => handleTabClicked('profile')}>
-            Profile
-          </button>
+          <div className="profile-avatar" onClick={() => handleTabClicked('profile')}>
+            <img
+              src="/images/avatars/avatar-placeholder.png" // replace later with real avatar if available
+              alt="Profile"
+            />
+          </div>
         ) : (
           <button className="login-button" onClick={openLoginModal}>
-            Login
+            Login / Register
           </button>
         )}
       </Header>
