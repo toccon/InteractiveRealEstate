@@ -11,7 +11,15 @@ import PricingPage from './pricing/PricingPage';
 import ContactPage from './contact/ContactPage';
 import ProfilePage from './profile/ProfilePage';
 import { AuthProvider } from './login/AuthContext';
+import { useState } from 'react';
+import { Modal, Tabs } from 'antd';
+import Login from './login/Login';
+import Register from './login/Register';
+
 function App() {
+  const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
+  const openLoginModal = () => setIsLoginModalOpen(true);
+  const closeLoginModal = () => setIsLoginModalOpen(false);
 
   const isSidePanelOpen = useSelector(state => state.sidePanel.open)
   const selectedTab = useSelector(state => state.selectedTab.tabName)
@@ -34,7 +42,7 @@ function App() {
       case 'pricing':
         return (
           <div className="pricing-page-container">
-            <PricingPage />
+            <PricingPage openLoginModal={openLoginModal} />
           </div>
         );
       case 'contact':
@@ -61,9 +69,26 @@ function App() {
   return (
     <Layout>
       <AuthProvider>
-        <FixedHeader/>
+        <FixedHeader openLoginModal={openLoginModal} />
           {displayContent()}
         <FixedFooter/>
+        <Modal
+          title="Account Access"
+          open={isLoginModalOpen}
+          onCancel={closeLoginModal}
+          footer={null}
+          width={400}
+          className="auth-modal"
+        >
+          <Tabs defaultActiveKey="1" centered className="custom-tabs">
+            <Tabs.TabPane tab="Login" key="1">
+              <Login onSuccess={closeLoginModal} />
+            </Tabs.TabPane>
+            <Tabs.TabPane tab="Register" key="2">
+              <Register onSuccess={closeLoginModal} />
+            </Tabs.TabPane>
+          </Tabs>
+        </Modal>
       </AuthProvider>
     </Layout>
   );

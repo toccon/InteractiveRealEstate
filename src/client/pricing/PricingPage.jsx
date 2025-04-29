@@ -1,9 +1,25 @@
 import React from 'react';
-import pricingPageStrings from '../constants/pricingPageStrings'; // Adjust the path if needed
+import { useDispatch } from 'react-redux';
+import { selectTab } from '../redux/slices/selectedTabSlice'; 
+import { useAuth } from '../login/AuthContext'; // Import auth
+import { message } from 'antd'; // For toast
+import pricingPageStrings from '../constants/pricingPageStrings';
 import './PricingPage.css';
 
-const PricingPage = () => {
+const PricingPage = ({ openLoginModal }) => { 
+  const dispatch = useDispatch();
+  const { currentUser } = useAuth(); // Get current user
   const { title, subtitle, tiers } = pricingPageStrings;
+
+  const handleUpgradeClick = () => {
+    if (!currentUser) {
+      openLoginModal();
+      message.info('You must be logged in to subscribe.');
+    } else {
+      // Later you could send them to payment page here
+      message.success('Coming soon: Subscription flow!');
+    }
+  };
 
   return (
     <div className="pricing-container">
@@ -21,7 +37,21 @@ const PricingPage = () => {
                 <li key={idx}>{feature}</li>
               ))}
             </ul>
-            <button className="select-button">{tier.buttonText}</button>
+            {tier.title === 'Free' ? (
+              <button
+                className="select-button"
+                onClick={() => dispatch(selectTab('explore'))}
+              >
+                {tier.buttonText}
+              </button>
+            ) : (
+              <button
+                className="select-button"
+                onClick={handleUpgradeClick}
+              >
+                {tier.buttonText}
+              </button>
+            )}
           </div>
         ))}
       </div>

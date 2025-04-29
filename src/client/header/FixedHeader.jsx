@@ -10,7 +10,7 @@ import { useAuth } from '../login/AuthContext';
 
 const { Header } = Layout;
 
-export const FixedHeader = () => {
+export const FixedHeader = ({ openLoginModal }) => {
   const dispatch = useDispatch();
   const currentSelectedTab = useSelector(state => state.selectedTab.tabName);
   const { currentUser } = useAuth();
@@ -52,6 +52,8 @@ export const FixedHeader = () => {
           className="header-logo"
           src="/images/logos/png/logo-no-background.png"
           alt="Logo"
+          style={{ cursor: 'pointer' }}
+          onClick={() => handleTabClicked(homeTabName.toLowerCase())}
         />
 
         <nav className="header-tabs">
