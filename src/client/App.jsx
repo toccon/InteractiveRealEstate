@@ -9,7 +9,8 @@ import { FixedFooter } from './footer/FixedFooter';
 import HomePage from './home/HomePage';
 import PricingPage from './pricing/PricingPage';
 import ContactPage from './contact/ContactPage';
-
+import ProfilePage from './profile/ProfilePage';
+import { AuthProvider } from './login/AuthContext';
 function App() {
 
   const isSidePanelOpen = useSelector(state => state.sidePanel.open)
@@ -42,6 +43,12 @@ function App() {
             <ContactPage />
           </div>
         );
+      case 'profile':
+        return (
+          <div className="profile-page-container">
+            <ProfilePage />
+          </div>
+        );
       default:
         return (
           <div>
@@ -53,9 +60,11 @@ function App() {
 
   return (
     <Layout>
-      <FixedHeader/>
-        {displayContent()}
-      <FixedFooter/>
+      <AuthProvider>
+        <FixedHeader/>
+          {displayContent()}
+        <FixedFooter/>
+      </AuthProvider>
     </Layout>
   );
 }

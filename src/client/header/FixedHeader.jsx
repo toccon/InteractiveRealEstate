@@ -1,20 +1,26 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useSelector, useDispatch } from "react-redux";
 import { selectTab } from '../redux/slices/selectedTabSlice'; 
 import { close } from '../redux/slices/sidePanelSlice';
-import { Layout } from 'antd';
-import './FixedHeader.css'; // <-- We'll use a small custom CSS file
+import { Layout, Modal, Tabs } from 'antd';
+import Login from '../login/Login';      
+import Register from '../login/Register'; 
+import './FixedHeader.css';
+import { useAuth } from '../login/AuthContext';
 
 const { Header } = Layout;
 
 export const FixedHeader = () => {
   const dispatch = useDispatch();
   const currentSelectedTab = useSelector(state => state.selectedTab.tabName);
+  const { currentUser } = useAuth();
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const homeTabName = "Home";
   const exploreTabName = "Explore";
   const pricingTabName = "Pricing";
-  const contactTabName = "Contact"
+  const contactTabName = "Contact";
+
   function handleTabClicked(tabName) {
     if (tabName !== currentSelectedTab) {
       if (currentSelectedTab === 'explore') {
@@ -24,44 +30,89 @@ export const FixedHeader = () => {
     }
   }
 
+  function openLoginModal() {
+    setIsModalOpen(true);
+  }
+
+  function closeLoginModal() {
+    setIsModalOpen(false);
+  }
+
+  function handleAuthSuccess() {
+    setIsModalOpen(false);
+    setTimeout(() => {
+      dispatch(selectTab('explore'));
+    }, 500); // 0.5s delay
+  }
+
   return (
-    <Header className="fixed-header">
-      <img
-        className="header-logo"
-        src="/images/logos/png/logo-no-background.png"
-        alt="Logo"
-      />
+    <>
+      <Header className="fixed-header">
+        <img
+          className="header-logo"
+          src="/images/logos/png/logo-no-background.png"
+          alt="Logo"
+        />
 
-      <nav className="header-tabs">
-        <div
-          className={`tab-item ${currentSelectedTab === 'home' ? 'active' : ''}`}
-          onClick={() => handleTabClicked(homeTabName.toLowerCase())}
-        >
-          {homeTabName}
-        </div>
-        <div
-          className={`tab-item ${currentSelectedTab === 'explore' ? 'active' : ''}`}
-          onClick={() => handleTabClicked(exploreTabName.toLowerCase())}
-        >
-          {exploreTabName}
-        </div>
-        <div
-          className={`tab-item ${currentSelectedTab === 'pricing' ? 'active' : ''}`}
-          onClick={() => handleTabClicked(pricingTabName.toLowerCase())}
-        >
-          {pricingTabName}
-        </div>
-        <div
-          className={`tab-item ${currentSelectedTab === 'contact' ? 'active' : ''}`}
-          onClick={() => handleTabClicked(contactTabName.toLowerCase())}
-        >
-          {contactTabName}
-        </div>
-      </nav>
+        <nav className="header-tabs">
+          <div
+            className={`tab-item ${currentSelectedTab === 'home' ? 'active' : ''}`}
+            onClick={() => handleTabClicked(homeTabName.toLowerCase())}
+          >
+            {homeTabName}
+          </div>
+          <div
+            className={`tab-item ${currentSelectedTab === 'explore' ? 'active' : ''}`}
+            onClick={() => handleTabClicked(exploreTabName.toLowerCase())}
+          >
+            {exploreTabName}
+          </div>
+          <div
+            className={`tab-item ${currentSelectedTab === 'pricing' ? 'active' : ''}`}
+            onClick={() => handleTabClicked(pricingTabName.toLowerCase())}
+          >
+            {pricingTabName}
+          </div>
+          <div
+            className={`tab-item ${currentSelectedTab === 'contact' ? 'active' : ''}`}
+            onClick={() => handleTabClicked(contactTabName.toLowerCase())}
+          >
+            {contactTabName}
+          </div>
+        </nav>
 
-      <button className="login-button">
-        Login
-      </button>
-    </Header>
+        {currentUser ? (
+          <button className="profile-button" onClick={() => handleTabClicked('profile')}>
+            Profile
+          </button>
+        ) : (
+          <button className="login-button" onClick={openLoginModal}>
+            Login
+          </button>
+        )}
+      </Header>
+
+      <Modal
+        title=""
+        open={isModalOpen}
+        onCancel={closeLoginModal}
+        footer={null}
+        width={400}
+        className="auth-modal"
+      >
+        <Tabs defaultActiveKey="1" centered className="custom-tabs">
+          <Tabs.TabPane tab="Login" key="1">
+            <div className="auth-form-wrapper">
+              <Login onSuccess={handleAuthSuccess} />
+            </div>
+          </Tabs.TabPane>
+          <Tabs.TabPane tab="Register" key="2">
+            <div className="auth-form-wrapper">
+              <Register onSuccess={handleAuthSuccess} />
+            </div>
+          </Tabs.TabPane>
+        </Tabs>
+      </Modal>
+    </>
   );
 };

@@ -64,3 +64,115 @@
     background: #003366;
     color: white;
   }  
+
+  .custom-tabs .ant-tabs-nav {
+    margin-bottom: 24px;
+  }
+
+  .custom-tabs .ant-tabs-tab {
+    font-size: 16px;
+    font-weight: 500;
+    color: #333;
+    transition: all 0.3s ease;
+    padding: 8px 16px;
+  }
+
+  .custom-tabs .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn {
+    color: #003366;
+    font-weight: 600;
+  }
+
+  .custom-tabs .ant-tabs-tab:hover {
+    color: #003366;
+  }
+
+  .custom-tabs .ant-tabs-tab-active .ant-tabs-tab-btn {
+    color: #003366;
+    font-weight: 600;
+  }
+
+  .custom-tabs .ant-tabs-ink-bar {
+    background: #003366;
+    height: 2px;
+  }
+
+    /* Improve modal container */
+  .auth-modal .ant-modal-content {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(5px);
+    border-radius: 12px;
+    padding: 24px;
+  }
+
+  /* Center and space inside the tabs */
+  .auth-form-wrapper {
+    padding: 20px 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .auth-form-wrapper {
+    animation: fadeIn 0.5s ease;
+  }
+  
+  @keyframes fadeIn {
+    0% {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0px);
+    }
+  }
+
+  /* Input fields */
+  .auth-form-wrapper input {
+    width: 100%;
+    padding: 12px 14px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 15px;
+    transition: border 0.3s;
+  }
+
+  .auth-form-wrapper input:focus {
+    border-color: #003366;
+    outline: none;
+  }
+
+  /* Submit buttons */
+  .auth-form-wrapper button[type="submit"] {
+    width: 100%;
+    padding: 12px;
+    background-color: #003366;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: bold;
+    transition: background-color 0.3s;
+    cursor: pointer;
+  }
+
+  .auth-form-wrapper button[type="submit"]:hover {
+    background-color: #0050b3;
+  }
+
+  /* Link to switch between Login/Register */
+  .auth-form-wrapper p {
+    margin-top: 12px;
+    font-size: 14px;
+  }
+
+  .auth-form-wrapper p span {
+    color: #003366;
+    cursor: pointer;
+    font-weight: 500;
+  }
+
+  .auth-form-wrapper p span:hover {
+    text-decoration: underline;
+  }
