@@ -7,7 +7,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { select, clear } from '../../redux/slices/selectedCountrySlice';
 import { close } from '../../redux/slices/sidePanelSlice';
 import { useChart } from "../map/MapContext";
-import { northAmericaCountries, southAmericaCountries, asiaCountries, middleEastCountries, europeCountries, africaCountries, supportedCountries } from "../../Constants";
+import { northAmericaCountries, southAmericaCountries, asiaCountries, middleEastCountries, europeCountries, africaCountries, supportedCountries } from "../constants/mapConstants";
 import { SidePanelDragger } from "./SidePanelDragger";
 import '../../App.css';
 

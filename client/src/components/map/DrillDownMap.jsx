@@ -4,7 +4,7 @@ import * as am5map from '@amcharts/amcharts5/map';
 import am5themes_Animated from "@amcharts/amcharts5/themes/Animated";
 import am5geodata_worldLow from "@amcharts/amcharts5-geodata/worldLow";
 import am5geodata_countries2 from "@amcharts/amcharts5-geodata/data/countries2";
-import { supportedCountries, backButtonSVG } from "../../Constants";
+import { supportedCountries, backButtonSVG } from "../constants/mapConstants";
 import { useDispatch, useSelector } from 'react-redux';
 import { clear, select } from '../../redux/slices/selectedCountrySlice';
 import { open } from '../../redux/slices/sidePanelSlice';
