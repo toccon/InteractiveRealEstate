@@ -12,9 +12,7 @@ import ContactPage from './components/contact/ContactPage';
 import ProfilePage from './components/profile/ProfilePage';
 import { AuthProvider } from './components/login/AuthContext';
 import { useState } from 'react';
-import { Modal, Tabs } from 'antd';
-import Login from './components/login/Login';
-import Register from './components/login/Register';
+import LoginRegisterModal from './components/login/LoginRegisterModal';
 
 function App() {
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
@@ -72,23 +70,10 @@ function App() {
         <FixedHeader openLoginModal={openLoginModal} />
           {displayContent()}
         <FixedFooter/>
-        <Modal
-          title="Account Access"
-          open={isLoginModalOpen}
-          onCancel={closeLoginModal}
-          footer={null}
-          width={400}
-          className="auth-modal"
-        >
-          <Tabs defaultActiveKey="1" centered className="custom-tabs">
-            <Tabs.TabPane tab="Login" key="1">
-              <Login onSuccess={closeLoginModal} />
-            </Tabs.TabPane>
-            <Tabs.TabPane tab="Register" key="2">
-              <Register onSuccess={closeLoginModal} />
-            </Tabs.TabPane>
-          </Tabs>
-        </Modal>
+        <LoginRegisterModal 
+          onCancel={closeLoginModal} 
+          isLoginModalOpen={isLoginModalOpen}
+        />
       </AuthProvider>
     </Layout>
   );
