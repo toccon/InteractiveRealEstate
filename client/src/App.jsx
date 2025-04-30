@@ -1,20 +1,20 @@
 import { useSelector } from 'react-redux';
 import './App.css';
 import { Layout } from 'antd';
-import DrillDownMap from './map/DrillDownMap';
-import { MapProvider } from './map/MapContext';
-import { SidePanel } from './sidePanel/SidePanel';
-import { FixedHeader } from './header/FixedHeader';
-import { FixedFooter } from './footer/FixedFooter';
-import HomePage from './home/HomePage';
-import PricingPage from './pricing/PricingPage';
-import ContactPage from './contact/ContactPage';
-import ProfilePage from './profile/ProfilePage';
-import { AuthProvider } from './login/AuthContext';
+import DrillDownMap from './components/map/DrillDownMap';
+import { MapProvider } from './components/map/MapContext';
+import { SidePanel } from './components/sidePanel/SidePanel';
+import { FixedHeader } from './components/header/FixedHeader';
+import { FixedFooter } from './components/footer/FixedFooter';
+import HomePage from './components/home/HomePage';
+import PricingPage from './components/pricing/PricingPage';
+import ContactPage from './components/contact/ContactPage';
+import ProfilePage from './components/profile/ProfilePage';
+import { AuthProvider } from './components/login/AuthContext';
 import { useState } from 'react';
 import { Modal, Tabs } from 'antd';
-import Login from './login/Login';
-import Register from './login/Register';
+import Login from './components/login/Login';
+import Register from './components/login/Register';
 
 function App() {
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);

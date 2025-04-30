@@ -1,6 +1,6 @@
 import React from 'react';
 import { useDispatch } from "react-redux";
-import { selectTab } from '../redux/slices/selectedTabSlice'; 
+import { selectTab } from '../../redux/slices/selectedTabSlice'; 
 import homePageStrings from '../constants/homePageStrings';
 import './HomePage.css';
 

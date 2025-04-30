@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from "react-redux";
-import { selectTab } from '../redux/slices/selectedTabSlice'; 
-import { close } from '../redux/slices/sidePanelSlice';
+import { selectTab } from '../../redux/slices/selectedTabSlice'; 
+import { close } from '../../redux/slices/sidePanelSlice';
 import { Layout, Modal, Tabs } from 'antd';
 import Login from '../login/Login';      
 import Register from '../login/Register'; 

@@ -1,6 +1,6 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import { selectTab } from '../redux/slices/selectedTabSlice'; 
+import { selectTab } from '../../redux/slices/selectedTabSlice'; 
 import { useAuth } from '../login/AuthContext'; // Import auth
 import { message } from 'antd'; // For toast
 import pricingPageStrings from '../constants/pricingPageStrings';

@@ -4,12 +4,12 @@ import am5geodata_countries2 from "@amcharts/amcharts5-geodata/data/countries2";
 import { Drawer, Card, Flex, Button, Tabs } from "antd";
 import { ArrowLeftOutlined } from '@ant-design/icons';
 import { useSelector, useDispatch } from "react-redux";
-import { select, clear } from '../redux/slices/selectedCountrySlice';
-import { close } from '../redux/slices/sidePanelSlice';
+import { select, clear } from '../../redux/slices/selectedCountrySlice';
+import { close } from '../../redux/slices/sidePanelSlice';
 import { useChart } from "../map/MapContext";
-import { northAmericaCountries, southAmericaCountries, asiaCountries, middleEastCountries, europeCountries, africaCountries, supportedCountries } from "../Constants";
+import { northAmericaCountries, southAmericaCountries, asiaCountries, middleEastCountries, europeCountries, africaCountries, supportedCountries } from "../../Constants";
 import { SidePanelDragger } from "./SidePanelDragger";
-import '../App.css';
+import '../../App.css';
 
 const { Meta } = Card;
 const { TabPane } = Tabs;
