@@ -4,8 +4,8 @@
   "description": "",
   "scripts": {
     "client": "cd client && npm start",
-    "functions": "firebase emulators:start --only functions",
-    "start": "concurrently \"npm run client\" \"npm run functions\""
+    "start": "cd client && npm start",
+    "concurrently": "concurrently \"npm run client\" \"npm run functions\""
   },
   "devDependencies": {
     "concurrently": "^8.2.0",
