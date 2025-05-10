@@ -10,7 +10,7 @@ import HomePage from './components/home/HomePage';
 import PricingPage from './components/pricing/PricingPage';
 import ContactPage from './components/contact/ContactPage';
 import ProfilePage from './components/profile/ProfilePage';
-import { AuthProvider } from './components/login/AuthContext';
+import { AuthProviderWrapper } from './components/login/AuthContext';
 import { useState } from 'react';
 import LoginRegisterModal from './components/login/LoginRegisterModal';
 
@@ -66,7 +66,7 @@ function App() {
 
   return (
     <Layout>
-      <AuthProvider>
+      <AuthProviderWrapper>
         <FixedHeader openLoginModal={openLoginModal} />
           {displayContent()}
         <FixedFooter/>
@@ -74,7 +74,7 @@ function App() {
           onCancel={closeLoginModal} 
           isLoginModalOpen={isLoginModalOpen}
         />
-      </AuthProvider>
+      </AuthProviderWrapper>
     </Layout>
   );
 }
