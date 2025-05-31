@@ -1,44 +1,40 @@
-// src/client/profile/ProfilePage.jsx
+// src/client/profile/Profile.jsx
 import React from 'react';
 import { useAuth } from '../login/AuthContext';
 import { message } from 'antd';
 
 const ProfilePage = () => {
-  const { currentUser, isAuthenticated, isLoading, logout } = useAuth();
+  const { currentUser, userData, logout } = useAuth();
 
   const handleLogout = async () => {
     try {
       await logout();
       message.success('Logged out successfully!');
+      window.location.reload(); // Simple way to trigger re-render for now
     } catch (err) {
       console.error(err);
       message.error('Logout failed.');
     }
   };
 
-  if (isLoading) {
+  if (!currentUser || !userData) {
     return <div style={{ padding: '2rem', textAlign: 'center' }}>Loading profile...</div>;
   }
-
-  if (!isAuthenticated || !currentUser) {
-    return <div style={{ padding: '2rem', textAlign: 'center' }}>You are not logged in.</div>;
-  }
-
-  const profile = currentUser?.profile || {};
-  const email = profile?.email || 'N/A';
-  const sub = profile?.sub || 'N/A';
-  const emailVerified = profile?.email_verified ? '✔ Verified' : '❌ Not Verified';
-  const plan = profile?.['custom:plan'] || 'free';
 
   return (
     <div style={{ padding: '2rem', textAlign: 'center' }}>
       <h2>My Profile</h2>
       <div style={{ marginBottom: '1rem' }}>
-        <p><strong>Authenticated:</strong> {isAuthenticated ? '✅ Yes' : '❌ No'}</p>
-        <p><strong>Email:</strong> {email}</p>
-        <p><strong>User ID (sub):</strong> {sub}</p>
-        <p><strong>Email Verified:</strong> {emailVerified}</p>
-        <p><strong>Subscription Plan:</strong> {plan}</p>
+        <p><strong>Email:</strong> {userData.email}</p>
+        <p><strong>Plan:</strong> {userData.plan}</p>
+        <p>
+          <strong>Email Verified:</strong>{' '}
+          {userData.emailVerified ? (
+            <span style={{ color: 'green', fontWeight: 'bold' }}>✔ Verified</span>
+          ) : (
+            <span style={{ color: 'red' }}>❌ Not Verified</span>
+          )}
+        </p>
       </div>
       <button
         onClick={handleLogout}
