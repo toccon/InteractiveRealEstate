@@ -1,73 +1,21 @@
 import React, { useState } from 'react';
-import { auth, db } from './firebase';
-import { signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, sendPasswordResetEmail } from 'firebase/auth';
-import { doc, getDoc, setDoc } from 'firebase/firestore';
 import { message } from 'antd';
 
-const Login = ({ onSuccess = () => {} }) => {
+const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
 
   const handleLogin = async (e) => {
-    e.preventDefault();
-    try {
-      const userCredential = await signInWithEmailAndPassword(auth, email, password);
-      const user = userCredential.user;
-
-      if (!user.emailVerified) {
-        message.warning('Please verify your email address before accessing all features.');
-      }
-
-      message.success('Login successful! 🎉');
-      onSuccess();
-    } catch (err) {
-      console.error(err);
-      message.error(err.message || 'Login failed.');
-      setError(err.message);
-    }
+    var x = "test";
   };
 
   const handleGoogleLogin = async () => {
-    try {
-      const provider = new GoogleAuthProvider();
-      const result = await signInWithPopup(auth, provider);
-      const user = result.user;
-  
-      // Check if user profile exists
-      const userDocRef = doc(db, 'users', user.uid);
-      const userDocSnap = await getDoc(userDocRef);
-  
-      if (!userDocSnap.exists()) {
-        // If not, create a profile
-        await setDoc(userDocRef, {
-            email: user.email,
-            emailVerified: user.emailVerified,
-            createdAt: new Date(),
-            plan: 'free',
-          });
-      }
-  
-      message.success('Google login successful! 🎉');
-      onSuccess();
-    } catch (err) {
-      console.error(err);
-      message.error(err.message || 'Google login failed.');
-    }
+    var y = "test";
   };
 
   const handlePasswordReset = async () => {
-    if (!email) {
-      message.error('Please enter your email first.');
-      return;
-    }
-    try {
-      await sendPasswordResetEmail(auth, email);
-      message.success('Password reset email sent! 📧');
-    } catch (err) {
-      console.error(err);
-      message.error(err.message || 'Failed to send reset email.');
-    }
+    var z = "test";
   };
 
   return (

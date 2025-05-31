@@ -1,14 +1,13 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import { selectTab } from '../../redux/slices/selectedTabSlice'; 
-import { useAuth } from '../login/AuthContext'; // Import auth
 import { message } from 'antd'; // For toast
 import pricingPageStrings from '../constants/pricingPageStrings';
 import './PricingPage.css';
 
 const PricingPage = ({ openLoginModal }) => { 
   const dispatch = useDispatch();
-  const { currentUser } = useAuth(); // Get current user
+  const currentUser = null; // Get current user
   const { title, subtitle, tiers } = pricingPageStrings;
 
   const handleUpgradeClick = () => {

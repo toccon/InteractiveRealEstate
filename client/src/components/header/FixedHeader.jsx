@@ -6,14 +6,13 @@ import { Layout, Modal, Tabs } from 'antd';
 import Login from '../login/Login';      
 import Register from '../login/Register'; 
 import './FixedHeader.css';
-import { useAuth } from '../login/AuthContext';
 
 const { Header } = Layout;
 
 export const FixedHeader = ({ openLoginModal }) => {
   const dispatch = useDispatch();
   const currentSelectedTab = useSelector(state => state.selectedTab.tabName);
-  const { currentUser } = useAuth();
+  const currentUser = null; // Replace with actual user context or state
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const homeTabName = "Home";
