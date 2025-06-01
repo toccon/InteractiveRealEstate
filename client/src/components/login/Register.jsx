@@ -1,9 +1,15 @@
 import { useState, useEffect } from 'react';
+import { useAuth } from './AuthContext';
+import { message } from 'antd';
+import ConfirmEmail from './ConfirmEmail';
 
 const Register = ({ onSuccess = () => {} }) => {
+  const { signUp } = useAuth();
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const [showConfirm, setShowConfirm] = useState(false);
 
   // Clear error whenever email or password changes
   useEffect(() => {
@@ -12,10 +18,22 @@ const Register = ({ onSuccess = () => {} }) => {
 
   const handleRegister = async (e) => {
     e.preventDefault();
-    var x = "test";
+    try {
+      await signUp(email, password);
+      setShowConfirm(true); // show confirmation input
+    } catch (err) {
+      setError(err.message);
+    }
   };
 
+  const onEmailConfirmed = () => {
+    setShowConfirm(false); // hide confirmation input
+  }
+
   return (
+    showConfirm ? (
+      <ConfirmEmail email={email} onConfirmed={onEmailConfirmed} />
+    ) : (
     <div className="auth-form-wrapper">
       <form onSubmit={handleRegister}>
         <input
@@ -37,7 +55,7 @@ const Register = ({ onSuccess = () => {} }) => {
 
       {error && <p style={{ color: 'red', marginTop: '10px' }}>{error}</p>}
     </div>
-  );
+  ));
 };
 
 export default Register;

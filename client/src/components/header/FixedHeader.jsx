@@ -1,19 +1,16 @@
-import React, { useState } from 'react';
 import { useSelector, useDispatch } from "react-redux";
 import { selectTab } from '../../redux/slices/selectedTabSlice'; 
 import { close } from '../../redux/slices/sidePanelSlice';
-import { Layout, Modal, Tabs } from 'antd';
-import Login from '../login/Login';      
-import Register from '../login/Register'; 
+import { Layout } from 'antd';
 import './FixedHeader.css';
+import { useAuth } from '../login/AuthContext';
 
 const { Header } = Layout;
 
 export const FixedHeader = ({ openLoginModal }) => {
   const dispatch = useDispatch();
   const currentSelectedTab = useSelector(state => state.selectedTab.tabName);
-  const currentUser = null; // Replace with actual user context or state
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const { user } = useAuth();
 
   const homeTabName = "Home";
   const exploreTabName = "Explore";
@@ -27,21 +24,6 @@ export const FixedHeader = ({ openLoginModal }) => {
       }
       dispatch(selectTab(tabName));
     }
-  }
-
-  function openLoginModal() {
-    setIsModalOpen(true);
-  }
-
-  function closeLoginModal() {
-    setIsModalOpen(false);
-  }
-
-  function handleAuthSuccess() {
-    setIsModalOpen(false);
-    setTimeout(() => {
-      dispatch(selectTab('explore'));
-    }, 500); // 0.5s delay
   }
 
   return (
@@ -82,10 +64,10 @@ export const FixedHeader = ({ openLoginModal }) => {
           </div>
         </nav>
 
-        {currentUser ? (
+        {user ? (
           <div className="profile-avatar" onClick={() => handleTabClicked('profile')}>
             <img
-              src="/images/avatars/avatar-placeholder.png" // replace later with real avatar if available
+              src="/images/avatars/avatar-placeholder.png" // TODO replace later with real avatar if available
               alt="Profile"
             />
           </div>
@@ -95,28 +77,6 @@ export const FixedHeader = ({ openLoginModal }) => {
           </button>
         )}
       </Header>
-
-      <Modal
-        title=""
-        open={isModalOpen}
-        onCancel={closeLoginModal}
-        footer={null}
-        width={400}
-        className="auth-modal"
-      >
-        <Tabs defaultActiveKey="1" centered className="custom-tabs">
-          <Tabs.TabPane tab="Login" key="1">
-            <div className="auth-form-wrapper">
-              <Login onSuccess={handleAuthSuccess} />
-            </div>
-          </Tabs.TabPane>
-          <Tabs.TabPane tab="Register" key="2">
-            <div className="auth-form-wrapper">
-              <Register onSuccess={handleAuthSuccess} />
-            </div>
-          </Tabs.TabPane>
-        </Tabs>
-      </Modal>
     </>
   );
 };

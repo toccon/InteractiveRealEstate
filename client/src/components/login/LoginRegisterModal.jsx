@@ -3,7 +3,7 @@ import Login from './Login';
 import Register from './Register';
 import { Modal, Tabs } from 'antd';
 
-const LoginRegisterModal = ({ onCancel = () => {}, isLoginModalOpen }) => {
+const LoginRegisterModal = ({ onCancel, isLoginModalOpen }) => {
 
   return (
     <Modal

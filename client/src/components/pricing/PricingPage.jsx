@@ -4,14 +4,15 @@ import { selectTab } from '../../redux/slices/selectedTabSlice';
 import { message } from 'antd'; // For toast
 import pricingPageStrings from '../constants/pricingPageStrings';
 import './PricingPage.css';
+import { useAuth } from '../login/AuthContext';
 
 const PricingPage = ({ openLoginModal }) => { 
   const dispatch = useDispatch();
-  const currentUser = null; // Get current user
+  const { user } = useAuth(); 
   const { title, subtitle, tiers } = pricingPageStrings;
 
   const handleUpgradeClick = () => {
-    if (!currentUser) {
+    if (!user) {
       openLoginModal();
       message.info('You must be logged in to subscribe.');
     } else {

@@ -1,21 +1,34 @@
 import React, { useState } from 'react';
 import { message } from 'antd';
+import { useAuth } from './AuthContext';
 
-const Login = () => {
+const Login = ({ onSuccess }) => {
+  const { signIn } = useAuth();
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
 
   const handleLogin = async (e) => {
-    var x = "test";
-  };
-
-  const handleGoogleLogin = async () => {
-    var y = "test";
+    e.preventDefault();
+    setError('');
+    try {
+      await signIn(email, password);
+      message.success('Logged in successfully!');
+      if (onSuccess) onSuccess();
+    } catch (err) {
+      setError(err.message);
+    }
   };
 
   const handlePasswordReset = async () => {
-    var z = "test";
+    setError('');
+    try {
+      await useAuth.forgotPassword(email);
+      message.success('Password reset code sent to your email.');
+    } catch (err) {
+      setError(err.message);
+    }
   };
 
   return (
@@ -37,10 +50,6 @@ const Login = () => {
         />
         <button type="submit">Login</button>
       </form>
-
-      <button onClick={handleGoogleLogin} style={{ marginTop: '10px', backgroundColor: '#4285F4' }}>
-        Continue with Google
-      </button>
 
       <p style={{ marginTop: '8px' }}>
         <span onClick={handlePasswordReset} style={{ color: '#003366', cursor: 'pointer' }}>
