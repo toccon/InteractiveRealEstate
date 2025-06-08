@@ -1,10 +1,12 @@
 .country-card {
-  width: 90px;
-  height: 90px;
+  width: 60px;
+  height: 40px;
 }
 
 .country-card .ant-card-body {
   padding: 5px;
+  width: 100px;
+  justify-self: center;
 }
 
 .side-panel-back-button {

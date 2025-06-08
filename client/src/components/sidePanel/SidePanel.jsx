@@ -120,11 +120,6 @@ export const SidePanel = () => {
     for (let id of supportedCountries) {
       if (am5geodata_countries2.hasOwnProperty(id)) {
         let country = am5geodata_countries2[id];
-        
-        let fontsize = 12; 
-        if(id === "GB" || id === "CZ"){
-          fontsize = 10;
-        }
 
         let countryName = country.country;
         if(id === "AE"){
@@ -132,6 +127,12 @@ export const SidePanel = () => {
         }
         else if(id === "VN"){
           countryName = "Vietnam"
+        }
+        else if(id === "RU"){
+          countryName = "Russia"
+        }
+        else if(id === "KR"){
+          countryName = "South Korea"
         }
 
         // Construct the image filename using the ID
@@ -146,7 +147,7 @@ export const SidePanel = () => {
             onClick={() => handleCountryCardClicked(id)}
           >
             <Meta 
-              title={<div style={{ fontSize: fontsize, textAlign: 'center' }}>{countryName}</div>}
+              title={<div style={{ fontSize: 12, textAlign: 'center' }}>{countryName}</div>}
             />
           </Card>
           if(northAmericaCountries.includes(id)) naCountriesJsx.push(jsx);
